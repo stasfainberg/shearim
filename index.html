@@ -52,15 +52,15 @@
                 <option value="3">Credit Card</option>
               </select>
             -->
-              <input id="paymentMethod" class="form-control" type="text" tabindex="3" placeholder="תשלום באמצעות" maxlength="30" required>
+              <input id="paymentMethod" class="form-control" type="text" tabindex="3" placeholder="תשלום באמצעות" maxlength="20" required>
             </div>
             <div class="col-sm-4">
               <label for="invoiceNumber"></label>
-              <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="30" required>
+              <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="20" required>
             </div>
             <div class="col-sm-4">
               <label for="clientName"></label>
-              <input id="clientName" class="form-control" type="text" tabindex="1" placeholder="שם הלקוח" maxlength="30" required>          
+              <input id="clientName" class="form-control" type="text" tabindex="1" placeholder="שם הלקוח" maxlength="20" required>          
             </div>
           </div>
 
@@ -68,15 +68,15 @@
           <div class="row">
             <div class="col-sm-4">
               <label for="amount"></label>
-              <input id="amount" class="form-control" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" required>
+              <input id="amount" class="form-control" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" maxlength="20" required>
             </div>
             <div class="col-sm-4">
               <label for="paymentDate"></label>
-              <input id="paymentDate" class="form-control" type="text" tabindex="5" placeholder="תאריך התשלום" required>
+              <input id="paymentDate" class="form-control" type="text" tabindex="5" placeholder="תאריך התשלום" maxlength="20" required>
             </div>
             <div class="col-sm-4">
               <label for="paiedBy"></label>
-              <input id="paiedBy" class="form-control" type="text" tabindex="4" placeholder="שולם על ידי" required>
+              <input id="paiedBy" class="form-control" type="text" tabindex="4" placeholder="שולם על ידי" maxlength="20" required>
             </div>
           </div>
 
@@ -135,30 +135,9 @@
         <h2>לקוחות</h2>
         <hr>
 
-
-
-<!--
-
-        <table id="myTable" class="table table-hover">
-          <thead align="right">
-            <tr>
-              <th>פעולות</th>
-              <th>סכום</th>
-              <th>תאריך התשלום</th>
-              <th>שולם על ידי</th>
-              <th>תשלום באמצעות</th>
-              <th>מספר חשבונית</th>
-              <th>שם לקוח</th>
-            </tr>
-          </thead>
-          <tbody align="right">
-          </tbody>
-        </table>
-
--->
-
         <div id="loader"></div>
 
+        
         <div style="display:none;" id="myDiv" class="animate-bottom">
           <table id="myTable" class="table table-hover">
             <thead align="right">
@@ -172,7 +151,7 @@
                 <th>שם לקוח</th>
               </tr>
             </thead>
-            <tbody align="right">
+            <tbody align="right" id="tableBody">
             </tbody>
           </table>
         </div>

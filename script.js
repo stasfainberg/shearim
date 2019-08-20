@@ -1,5 +1,5 @@
 
-/********************************** Create needed constants ******************************/
+/***************************************** Create needed constants *************************************/
 
 //Form Section
 const form = document.querySelector('form');
@@ -22,6 +22,7 @@ const totalClientsInput = document.querySelector('#totalClients');
 const list = document.querySelector('ul');
 const tbody = document.querySelector('tbody');
 const table = document.querySelector('#myTable');
+const tableBody = document.getElementById('#tableBody');
 
 
 
@@ -30,26 +31,20 @@ const table = document.querySelector('#myTable');
 
 
 
-
-/********************************** Define Variables ******************************/
+/******************************************** Define Variables ****************************************/
 // Create an instance of a db object for us to store the open database in
 let db;
 
 //ReadOnly total amount  
 var totalAmount = Number("0");
 var totalClients = 0;
+
 //Focus page on first input
 document.getElementById("clientName").focus();
 
+//displayDate function - set timeout variable
 var myVar;
 let i = 0;
-
-//Console.log() - for testing
-console.log("FORM");
-console.log(form);
-
-console.log("UL");
-console.log(list);
 
 
 
@@ -67,7 +62,7 @@ console.log(list);
 
 
 
-/********************************************************** Logic *********************************************************/
+/**************************************** DataBase Creation | DataBase Modification ******************************************/
 
 //Main function
 window.onload = function() {
@@ -89,18 +84,13 @@ window.onload = function() {
 
     // Run the displayData() function to display the notes already in the IDB
     //displayData();
-
-
     myVar = setTimeout(displayData, 1000);
-
-
   };
 
 
 
   // Setup the database tables if this has not already been done
   request.onupgradeneeded = function(e) {
-
     // Grab a reference to the opened database
     let db = e.target.result;
 
@@ -119,6 +109,14 @@ window.onload = function() {
 
     console.log('Database setup complete');
   };
+
+
+
+
+
+
+
+  /************************************************ Add Data to DataBase ***************************************************/
 
   // Create an onsubmit handler so that when the form is submitted the addData() function is run
   form.onsubmit = addData;
@@ -148,7 +146,6 @@ window.onload = function() {
 
 
 
-
     request.onsuccess = function() {
       // Clear the form, ready for adding the next entry
       clientNameInput.value = '';
@@ -157,14 +154,9 @@ window.onload = function() {
       paymentDateInput.value = '';
       paiedByInput.value = '';
       amountInput.value = '';
+
+      totalAmount = 0;
     };
-
-
-
-
-
-
-
 
     // Report on the success of the transaction completing, when everything is done
     transaction.oncomplete = function() {
@@ -172,7 +164,7 @@ window.onload = function() {
 
       // update the display of data to show the newly added item, by running displayData() again.
       //displayData();
-
+    
       document.getElementById("loader").style.display = "block";
       document.getElementById("myDiv").style.display = "none";
       myVar = setTimeout(displayData, 1000);
@@ -186,41 +178,37 @@ window.onload = function() {
 
 
 
+
+
+
+
+  /************************************************ Display Data in Browser ***************************************************/
+
   // Define the displayData() function
   function displayData() {
+    // Here we empty the contents of the list element each time the display is updated
+    // If you don't do this, you'd get duplicates listed each time a new note is added
+    //while (list.firstChild) {
+    //  list.removeChild(list.firstChild);
+    //}
 
 
     // Here we empty the contents of the list element each time the display is updated
     // If you don't do this, you'd get duplicates listed each time a new note is added
-    while (list.firstChild) {
-      list.removeChild(list.firstChild);
+    while (tbody.firstChild) {
+      tbody.removeChild(tbody.firstChild);
     }
 
-    console.log("before table deletion");
-    while(i < totalClients)
-    {
-      console.log("for - before");
-      table.deleteRow(i);
-      i++;
-      console.log("for - after");
-    }
 
-    console.log("after table deletion");
-    i = 0;
-
-    document.getElementById("loader").style.display = "none";
-    document.getElementById("myDiv").style.display = "block";
     
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
     let objectStore = db.transaction('shearim_os').objectStore('shearim_os');
 
 
-
-    console.log("Total clients: ");
+    //Show total clients in total clients input
     totalClients = objectStore.count();
     totalClients.onsuccess = function() {        
-      console.log(totalClients.result);
       totalClientsInput.setAttribute("value", totalClients.result);
     }
 
@@ -232,17 +220,15 @@ window.onload = function() {
       // Get a reference to the cursor
       let cursor = e.target.result;
 
-      console.log("CURSOR");
-      console.log(cursor);
-
       // If there is still another data item to iterate through, keep running this code
       if(cursor) {
         // Create a list item, h3, and p to put each data item inside when displaying it
         // structure the HTML fragment, and append it inside the list
 
 
-        /************************************* Create Table Data ****************************************/
 
+
+        /************************************* Create Table Data ****************************************/
         //Create row element
         let tableRow = document.createElement('tr');
 
@@ -346,24 +332,7 @@ window.onload = function() {
 
       
 
-        /************************* Display Data in Summary Section ********************************/
-        console.log("totalAmount: " + totalAmount);
-
-        console.log("cursor.value.amount is: " + cursor.value.amount);
-
-        //var number = Number(cursor.value.amount);
-        console.log("cursor.value.amount converted to number");
-
-        //console.log("number isInteger? " + Number.isInteger(number));
-        //console.log("number: " + number);
-
-        console.log("totalAmount isInteger? " + Number.isInteger(totalAmount));
-
-        totalAmount += Number(cursor.value.amount);
-        console.log("totalAmount: " + totalAmount);
-
-        totalAmountInput.setAttribute("value", totalAmount.toString(10));
-
+        
 
 
 
@@ -389,7 +358,13 @@ window.onload = function() {
         deleteButton.onclick = deleteItem;
 
 
-        /************************************ Display Summary Info *************************************/
+
+
+        
+        /************************* Display Data in Summary Section ********************************/
+        
+        totalAmount += Number(cursor.value.amount);
+        totalAmountInput.setAttribute("value", totalAmount.toString(10));
 
 
 
@@ -407,20 +382,26 @@ window.onload = function() {
         }
         // if there are no more cursor items to iterate through, say so
         console.log('Notes all displayed');
+
       }
 
-      console.log("finish Cursor - START REFRESH");
-      console.log("END REFRESH");
+
 
 
     };
           
-
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
 
 
   }
 
 
+
+
+
+
+  /************************************************ Delete Data from DataBase ***************************************************/
 
   // Define the deleteItem() function
   function deleteItem(e) {
@@ -452,13 +433,16 @@ window.onload = function() {
 
         document.getElementById("loader").style.display = "block";
         document.getElementById("myDiv").style.display = "none";
+
+        totalAmount = 0;
+        
         myVar = setTimeout(displayData, 1000);
 
         // Again, if list item is empty, display a 'No notes stored' message
         if(!list.firstChild) {
-          let listItem = document.createElement('li');
-          listItem.textContent = 'No notes stored.';
-          list.appendChild(listItem);
+          //let listItem = document.createElement('li');
+          //listItem.textContent = 'No notes stored.';
+          //list.appendChild(listItem);
         }
       };
     }
