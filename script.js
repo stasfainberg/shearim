@@ -1,35 +1,37 @@
 
 /***************************************** Create needed constants *************************************/
 
-//Form Section
+/****************** Form Section *****************/
 const form = document.querySelector('form');
 const submitBtn = document.querySelector('form button');
 
-//New Client Section 
+/*************** New Client Section **************/
+//First Row
 const clientNameInput = document.querySelector('#clientName');
 const invoiceNumberInput = document.querySelector('#invoiceNumber');
-const paymentMethodInput = document.querySelector('#paymentMethod');
 const paymentMethodSelectInput = document.querySelector('#paymentMethodSelect');
 
-
-const paymentDateInput = document.querySelector('#paymentDateInput');
-const paiedByInput = document.querySelector('#paiedBy');
+//Second Row 
 const paiedBySelectInput = document.querySelector('#paiedBySelect');
+const paymentDateInput = document.querySelector('#paymentDateInput');
 const amountInput = document.querySelector('#amount');
 
-//Summary Section 
+/*************** Summary Section **************/
+//First Row
 const totalAmountInput = document.querySelector('#totalAmount');
-const totalClientsInput = document.querySelector('#totalClients');
+const paiedAmountInput = document.querySelector('#paiedAmount');
+const shouldPayAmountInput = document.querySelector('#shouldPayAmount');
 
-//Data Section
-const list = document.querySelector('ul');
+//Second Row 
+const totalClientsInput = document.querySelector('#totalClients');
+const totalClientsPaiedInput = document.querySelector('#totalClientsPaied');
+const totalClientsUnPaiedInput = document.querySelector('#totalClientsUnPaied');
+
+/*************** Data Table Section **************/
+//const list = document.querySelector('ul');
 const tbody = document.querySelector('tbody');
 const table = document.querySelector('#myTable');
 const tableBody = document.getElementById('#tableBody');
-
-
-
-
 
 
 
@@ -38,35 +40,37 @@ const tableBody = document.getElementById('#tableBody');
 // Create an instance of a db object for us to store the open database in
 let db;
 
-//ReadOnly total amount  
-var totalAmount = Number("0");
-var totalClients = 0;
-
-//Focus page on first input
-document.getElementById("clientName").focus();
-
-//displayDate function - set timeout variable
-var myVar;
-let i = 0;
-
+/*************** New Client Section **************/
 var paymentMethodValue;
 var paiedByValue;
 
+/*************** Summary Section **************/
+//First Row
+var totalAmountValue = Number("0");
+var paiedAmountValue = Number("0");
+var shouldPayAmountValue = Number("0");
+
+//Second Row
+var totalClientsValuelist;
+var totalClientsValue = Number("0");
+var totalClientsPaiedValue = Number("0");
+var totalClientsUnPaiedValue = Number("0");
+
+//displayDate function - set timeout variable
+var myVar;
+
+
+
+
+/******************************************** Initial Setup ****************************************/
+//Focus page on first input
+document.getElementById("clientName").focus();
 
 
 
 
 
-        
-
-
-
-
-
-
-
-
-/**************************************** DataBase Creation | DataBase Modification ******************************************/
+/************************************* DataBase Creation | DataBase Modification ***************************************/
 
 //Main function
 window.onload = function() {
@@ -120,7 +124,7 @@ window.onload = function() {
 
 
 
-  /************************************************ Add Data to DataBase ***************************************************/
+  /************************************************ Add Data to Database ***************************************************/
 
   // Create an onsubmit handler so that when the form is submitted the addData() function is run
   form.onsubmit = addData;
@@ -133,10 +137,10 @@ window.onload = function() {
 
 
 
-
+  /*********************** Payment Method Selection ***********************/
     var paymentMethodSelectSelector = document.getElementById('paymentMethodSelect');
     var paymentMethodSelectValue = paymentMethodSelectSelector[paymentMethodSelectSelector.selectedIndex].value;
-
+  
     switch (Number(paymentMethodSelectValue)) {
       case 1:
         paymentMethodValue = "מזומן";
@@ -150,9 +154,11 @@ window.onload = function() {
       case 4:
         paymentMethodValue = "העברה בנקאית";
         break;
+      default:
+        paymentMethodValue = "אחר";
     }
 
-
+  /*********************** Paied By Selection ***********************/
     var paiedBySelectInputSelector = document.getElementById('paiedBySelect');
     var paiedBySelectInputValue = paiedBySelectInputSelector[paiedBySelectInputSelector.selectedIndex].value;
 
@@ -166,6 +172,8 @@ window.onload = function() {
       case 3:
         paiedByValue = "טכנאי";
         break;
+      default:
+          paiedByValue = "אחר";
     }
 
 
@@ -197,8 +205,7 @@ window.onload = function() {
       paymentDateInput.value = '';
       paiedBySelectInput.value = 'שולם על ידי';
       amountInput.value = '';
-
-      totalAmount = 0;
+      totalAmountValue = 0;
     };
 
     // Report on the success of the transaction completing, when everything is done
@@ -207,7 +214,6 @@ window.onload = function() {
 
       // update the display of data to show the newly added item, by running displayData() again.
       //displayData();
-    
       document.getElementById("loader").style.display = "block";
       document.getElementById("myDiv").style.display = "none";
       myVar = setTimeout(displayData, 1000);
@@ -250,9 +256,11 @@ window.onload = function() {
 
 
     //Show total clients in total clients input
-    totalClients = objectStore.count();
-    totalClients.onsuccess = function() {        
-      totalClientsInput.setAttribute("value", totalClients.result);
+    totalClientsValuelist = objectStore.count();
+    
+    totalClientsValuelist.onsuccess = function() {      
+      totalClientsValue = totalClientsValuelist.result;
+      totalClientsInput.setAttribute("value", totalClientsValue);
     }
 
 
@@ -385,7 +393,7 @@ window.onload = function() {
         // which item it corresponds to. This will be useful later when we want to delete items
         //listItem.setAttribute('data-note-id', cursor.value.id);
         tableRow.setAttribute('data-note-id', cursor.value.id);
-
+        
 
         // Create a button and place it inside each listItem
         //let deleteBtn = document.createElement('button');
@@ -399,16 +407,39 @@ window.onload = function() {
 
         //deleteBtn.onclick = deleteItem;
         deleteButton.onclick = deleteItem;
+        
+        //confirmBtn.onclick = deleteItem;
+        confirmButton.onclick = confirmPaied;
 
-
-
-
+        
         
         /************************* Display Data in Summary Section ********************************/
-        
-        totalAmount += Number(cursor.value.amount);
-        totalAmountInput.setAttribute("value", totalAmount.toString(10));
+        /****** First Row *****/
+        //Getting the amount from database and adding it to the total amount
+        totalAmountValue += Number(cursor.value.amount);
+        //Setting the value of total amount input
+        totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
 
+        //Shows the amount was already paied
+        paiedAmountInput.setAttribute("value", paiedAmountValue.toString(10));
+
+        //Shows the amount which left to be paied
+        shouldPayAmountValue = totalAmountValue - paiedAmountValue;
+        //Setting the value of client who should pay
+        shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+
+        /****** Second Row *****/
+        //
+        totalClientsInput.setAttribute("value", totalClientsValue.toString(10));
+        
+        //
+        totalClientsPaiedInput.setAttribute("value", totalClientsPaiedValue.toString(10));
+
+        //Settings the total amount of clients which didn't pay yet by substructing the total amount of clients which paied 
+        //from total amount of clients
+        totalClientsUnPaiedValue = totalClientsValue - totalClientsPaiedValue;
+        //Setting the value of total amount of clients which didn't pay input
+        totalClientsUnPaiedInput.setAttribute("value", totalClientsUnPaiedValue.toString(10));
 
 
 
@@ -418,10 +449,19 @@ window.onload = function() {
         cursor.continue();
       } else {
         // Again, if list item is empty, display a 'No notes stored' message
-        if(!list.firstChild) {
+        if(!tbody.firstChild) {
           //let listItem = document.createElement('li');
           //listItem.textContent = 'No notes stored.'
           //list.appendChild(listItem);
+          totalAmountValue = 0;
+          totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
+
+          shouldPayAmountValue = 0;
+          shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+
+          totalClientsUnPaiedValue = 0;
+          totalClientsUnPaiedInput.setAttribute("value", totalClientsUnPaiedValue.toString(10));
+
         }
         // if there are no more cursor items to iterate through, say so
         console.log('Notes all displayed');
@@ -477,20 +517,47 @@ window.onload = function() {
         document.getElementById("loader").style.display = "block";
         document.getElementById("myDiv").style.display = "none";
 
-        totalAmount = 0;
+        totalAmountValue = 0;
         
         myVar = setTimeout(displayData, 1000);
 
         // Again, if list item is empty, display a 'No notes stored' message
-        if(!list.firstChild) {
+        if(!tbody.firstChild) {
           //let listItem = document.createElement('li');
           //listItem.textContent = 'No notes stored.';
           //list.appendChild(listItem);
+          totalAmountValue = 0;
+          totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
+
+          shouldPayAmountValue = 0;
+          shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+
+          totalClientsUnPaiedValue = 0;
+          totalClientsUnPaiedInput.setAttribute("value", totalClientsUnPaiedValue.toString(10));
+
         }
       };
     }
   }
 
+
+  function confirmPaied(e){
+
+    // prevent default - we don't want to catch the the Button event.
+    e.preventDefault();
+
+    // retrieve the name of the task we want to delete. We need
+    // to convert it to a number before trying it use it with IDB; IDB key
+    // values are type-sensitive.
+    let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+    console.log("noteId" + noteId);
+
+    //e.target.parentNode.parentNode.parentNode.toggleClass("clicked");
+
+
+
+
+  }
 
 };
 

@@ -35,59 +35,51 @@
       </header>
 
 
-    <!------------------------------------------------ New Client Section -------------------------------------------------->
-      <div class="container-fluid myContainer">
+    <!------------------------------------------------ New Client Section ---------------------------------------------->
+      <div id="newClientSection" class="container-fluid myContainer">
         <h2>יצירת לקוח חדש</h2>
         <hr>
         <form id="myForm"> 
-
+          
+          <!-------------------- First Row --------------------->
           <div class="row">
             <div class="col-sm-4">
-              <select id="paymentMethodSelect" class="selectClasses">
+              <select id="paymentMethodSelect" class="selectClasses form-control" tabindex="3" required>
                 <option selected>שולם באמצעות</option>
                 <option value="1">מזומן</option>
                 <option value="2">צ'ק</option>
                 <option value="3">כרטיס אשראי</option>
                 <option value="4">העברה בנקאית</option>
               </select>
-              <!--
-              <input id="paymentMethod" class="form-control" type="text" tabindex="3" placeholder="תשלום באמצעות" maxlength="20" required>
-              -->
             </div>
             <div class="col-sm-4">
               <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="20" required>
             </div>
             <div class="col-sm-4">
-              <label for="clientName"></label>
               <input id="clientName" class="form-control" type="text" tabindex="1" placeholder="שם הלקוח" maxlength="20" required>          
             </div>
           </div>
 
 
+          <!-------------------- Second Row --------------------->
           <div class="row">
             <div class="col-sm-4">
-              <input id="amount" class="form-control" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" maxlength="20" required>
+              <input id="amount" class="form-control" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" max="999999999" required>
             </div>
             <div class="col-sm-4">
-              <label for="paymentDate"></label>
-              <input type="date" name="paymentDateInput" id="paymentDateInput">
-              <!--
-              <input id="paymentDate" class="form-control" type="text" tabindex="5" placeholder="תאריך התשלום" maxlength="20" required>
-              -->
+              <input type="date" class="form-control" name="paymentDateInput" id="paymentDateInput" tabindex="5" required>
             </div>
             <div class="col-sm-4">
-              <select id="paiedBySelect" class="selectClasses">
+              <select id="paiedBySelect" class="selectClasses form-control" tabindex="4" required>
                 <option selected>שולם על ידי</option>
                 <option value="1">שליח</option>
                 <option value="2">דואר</option>
                 <option value="3">טכנאי</option>
               </select>
-              <!--  
-              <input id="paiedBy" class="form-control" type="text" tabindex="4" placeholder="שולם על ידי" maxlength="20" required>
-              -->
             </div>
           </div>
 
+          <!-------------------- Third Row --------------------->
           <div>
             <button class="btn btn-secondary btn-lg btn-block" tabindex="7"><span style="font-size:x-large;">צור לקוח</span></button>
           </div>
@@ -96,50 +88,49 @@
       </div>
 
 
-    <!------------------------------------------------ Summary Section -------------------------------------------------->
-      <div class="container-fluid myContainer">
+    <!------------------------------------------------ Data Summary Section -------------------------------------------->
+      <div id="summarySection" class="container-fluid myContainer">
         <h2>סיכום</h2>
         <hr>
 
+        <!-------------------- First Row --------------------->
         <div class="row">
-
           <div class="col-sm">
-            <label for="shouldPay" class="float-right">עתידים לשלם</label>
-            <input id="shouldPay" class="form-control" tabindex="8" type="text" readonly>
+            <label for="shouldPayAmount" class="float-right">עתידים לשלם</label>
+            <input id="shouldPayAmount" class="form-control" tabindex="10" type="text" readonly>
           </div>
           <div class="col-sm">
-            <label for="paied" class="float-right">שולם עד כה</label>
-            <input id="paied" class="form-control" tabindex="9" type="text" readonly>
+            <label for="paiedAmount" class="float-right">שולם עד כה</label>
+            <input id="paiedAmount" class="form-control" tabindex="9" type="text" readonly>
           </div>
           <div class="col-sm">
             <label for="totalAmount" class="float-right">סה"כ לתשלום</label>
-            <input id="totalAmount" class="form-control" tabindex="10" type="text" readonly>
+            <input id="totalAmount" class="form-control" tabindex="8" type="text" readonly>
           </div>
-
         </div>
 
-        <div class="row">
 
+        <!-------------------- Second Row --------------------->
+        <div class="row">
           <div class="col-sm">
-            <label for="totalUnPaied" class="float-right">סה"כ שלא שילמו</label>
-            <input id="totalUnPaied" class="form-control" tabindex="10" type="text" readonly>
+            <label for="totalClientsUnPaied" class="float-right">סה"כ שלא שילמו</label>
+            <input id="totalClientsUnPaied" class="form-control" tabindex="13" type="text" readonly>
           </div>
           <div class="col-sm">
-            <label for="totalPaied" class="float-right">סה"כ ששילמו</label>
-            <input id="totalPaied" class="form-control" tabindex="9" type="text" readonly>
+            <label for="totalClientsPaied" class="float-right">סה"כ ששילמו</label>
+            <input id="totalClientsPaied" class="form-control" tabindex="12" type="text" readonly>
           </div>
           <div class="col-sm">
             <label for="totalClients" class="float-right">סה"כ לקוחות</label>
-            <input id="totalClients" class="form-control" tabindex="8" type="text" readonly>
+            <input id="totalClients" class="form-control" tabindex="11" type="text" readonly>
           </div>
-
         </div>
 
       </div>
 
       
-    <!------------------------------------------------ Data Table Section -------------------------------------------------->
-      <div class="container-fluid">
+    <!------------------------------------------------ Data Table Section ---------------------------------------------->
+      <div id="dataTableSection" class="container-fluid">
         <h2>לקוחות</h2>
         <hr>
 
@@ -165,12 +156,9 @@
 
       </div>
 
+      <a id="goBack" class="d-flex flex-row-reverse" href="#home">חזור למעלה</a>
     
-      <div id="myList">
-        <ul ></ul>
-      </div> 
-
-      
+      <!------------------------------------------------ Footer Section -------------------------------------------------->
       <footer>
         <div id="end">
           <p>Copyright Stas Fainberg.</p>

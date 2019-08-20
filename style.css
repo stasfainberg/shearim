@@ -51,7 +51,11 @@ div {
 }
 
 .selectClasses {
-  width: 260px;
+  width: 100%;
+  margin: auto;
+  text-align-last: right;
+  text-align: right;
+
 }
 
 input[type='text']{
@@ -74,12 +78,11 @@ h2 {
   margin: 3px;
 }
 
-
-
+.clicked {
+  background-color:#FF0000
+}
 
 /************************************** Loader ********************************/
-
-
 
 #loader {
   
@@ -88,15 +91,13 @@ h2 {
   left: 50%;
   top: 800%;
   */
-
-    z-index: 1;
+  z-index: 1;
   width: 150px;
   height: 150px;
   /*
   margin: -75px 0 0 -75px;
   */
   margin: 8% 50%;
-
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   border-top: 16px solid #3498db;
@@ -138,7 +139,3 @@ h2 {
 #myDiv {
   display: none;
 }
-
-*/
-
-
