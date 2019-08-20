@@ -4,8 +4,8 @@
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -24,84 +24,96 @@
   <body>
 
 
-
-      
+    
       <header>
         <div id="home">
-            <img src="image/landing-page-logo.png" class="img-fluid" alt = "שערים">
-            <h1>מערכת לחישוב<h1>
+          <img src="image/landing-page-logo.png" class="img-fluid" alt = "שערים">
+          <h1>מערכת לחישוב<h1>
         </div>
       </header>
 
 
-
-
-      <div id="content">
-        <h2>Create a new client</h2>
-
-
-
-
-
-
+      <div class="container float-right">
+        <h2>יצירת לקוח חדש</h2>
+        <hr>
         <form id="myForm"> 
 
           <div class="row">
-            <div class="col-sm">
-              <label for="clientName">Client Name: </label>
-              <input id="clientName" type="text" required>          
+            <div class="col-sm-4">
+              <label for="paymentMethod"></label>
+            <!--
+              <select id="selectPaymentMethod">
+                <option selected>Choose...</option>
+                <option value="1">Cash</option>
+                <option value="2">Check</option>
+                <option value="3">Credit Card</option>
+              </select>
+            -->
+              <input id="paymentMethod" type="text" tabindex="3" placeholder="תשלום באמצעות" required>
             </div>
-            <div class="col-sm">
-              <label for="invoiceNumber">Invoice Number: </label>
-              <input id="invoiceNumber" type="text" required>
+            <div class="col-sm-4">
+              <label for="invoiceNumber"></label>
+              <input id="invoiceNumber" type="text" tabindex="2" placeholder="מספר חשבונית" required>
             </div>
-            <div class="col-sm">
-              <label for="paymentMethod">Payment Method:  </label>
-              <input id="paymentMethod" type="text" required>
+            <div class="col-sm-4">
+              <label for="clientName"></label>
+              <input id="clientName" type="text" tabindex="1" placeholder="שם הלקוח" required>          
             </div>
           </div>
 
 
           <div class="row">
-            <div class="col-sm">
-              <label for="paymentDate">Date: </label>
-              <input id="paymentDate" type="text" required>
+            <div class="col-sm-4">
+              <label for="amount"></label>
+              <input id="amount" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" required>
             </div>
-            <div class="col-sm">
-              <label for="paiedBy">Paied by: </label>
-              <input id="paiedBy" type="text" required>
+            <div class="col-sm-4">
+              <label for="paymentDate"></label>
+              <input id="paymentDate" type="text" tabindex="5" placeholder="תאריך התשלום" required>
             </div>
-            <div class="col-sm">
-              <label for="amount">Amount: </label>
-              <input id="amount" type="text" required>
+            <div class="col-sm-4">
+              <label for="paiedBy"></label>
+              <input id="paiedBy" type="text" tabindex="4" placeholder="שולם על ידי" required>
             </div>
           </div>
-
           <div>
-            <button>Create new note</button>
+            <button class="btn btn-secondary btn-lg btn-block float-right" tabindex="7"><span style="font-size:x-large;">צור לקוח</span></button>
           </div>
-
         </form>
-
-
-
-
-
 
       </div>
 
 
-      <ul id="myList">
-        
-      </ul>
+      <div class="container float-right">
+        <h2>סיכום</h2>
+        <hr>
 
+        <div class="row">
+          <div class="col-sm">
+            <label for="summary" class="float-right">:סה"כ</label>
+            <input id="summary" class="form-control" tabindex="10" type="text" readonly>
+          </div>
+          <div class="col-sm">
+            <label for="paied" class="float-right">:שולם עד כה</label>
+            <input id="paied" class="form-control" tabindex="9" type="text" readonly>
+          </div>
+          <div class="col-sm">
+            <label for="shouldPay" class="float-right">:עתידים לשלם</label>
+            <input id="shouldPay" class="form-control" tabindex="8" type="text" readonly>
+          </div>
+        </div>
+      </div>
 
+      
 
-
-
+      <div id="myList">
+        <ul ></ul>
+      </div>  
+      
+      
       <footer>
         <div id="end">
-          <p>Copyright Stas Fainberg. Use the code as you like.</p>
+          <p>Copyright Stas Fainberg.</p>
         </div>
       </footer>        
 
@@ -112,11 +124,11 @@
 
 
 
-<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 
    

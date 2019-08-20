@@ -1,5 +1,7 @@
 // Create needed constants
-const list = document.querySelectorAll('#myList');
+const form = document.querySelector('form');
+const submitBtn = document.querySelector('form button');
+const list = document.querySelector('ul');
 
 const clientNameInput = document.querySelector('#clientName');
 const invoiceNumberInput = document.querySelector('#invoiceNumber');
@@ -9,19 +11,21 @@ const paymentDateInput = document.querySelector('#paymentDate');
 const paiedByInput = document.querySelector('#paiedBy');
 const amountInput = document.querySelector('#amount');
 
-const form = document.querySelectorAll("#myForm");
-const submitBtn = document.querySelector('form button');
+const summaryInput = document.querySelector('#summary');
+
 
 // Create an instance of a db object for us to store the open database in
 let db;
+var totalAmount = Number("0");
 
 
+console.log("FORM");
+console.log(form);
 
-  console.log("FORM");
-  console.log(form);
+console.log("UL");
+console.log(list);
 
-  console.log("UL");
-  console.log(list);
+document.getElementById("clientName").focus();
 
 
 
@@ -29,7 +33,7 @@ let db;
 window.onload = function() {
   // Open our database; it is created if it doesn't already exist
   // (see onupgradeneeded below)
-  let request = window.indexedDB.open('notes_db', 1);
+  let request = window.indexedDB.open('shearim_db', 1);
 
   // onerror handler signifies that the database didn't open successfully
   request.onerror = function() {
@@ -57,7 +61,7 @@ window.onload = function() {
 
     // Create an objectStore to store our notes in (basically like a single table)
     // including a auto-incrementing key
-    let objectStore = db.createObjectStore('notes_os', { keyPath: 'id', autoIncrement:true });
+    let objectStore = db.createObjectStore('shearim_os', { keyPath: 'id', autoIncrement:true });
 
     // Define what data items the objectStore will contain
     objectStore.createIndex('clientName', 'clientName', { unique: false });
@@ -89,10 +93,10 @@ window.onload = function() {
                   };
 
     // open a read/write db transaction, ready for adding the data
-    let transaction = db.transaction(['notes_os'], 'readwrite');
+    let transaction = db.transaction(['shearim_os'], 'readwrite');
 
     // call an object store that's already been added to the database
-    let objectStore = transaction.objectStore('notes_os');
+    let objectStore = transaction.objectStore('shearim_os');
 
     // Make a request to add our newItem object to the object store
     var request = objectStore.add(newItem);
@@ -119,6 +123,8 @@ window.onload = function() {
     };
   }
 
+
+
   // Define the displayData() function
   function displayData() {
     // Here we empty the contents of the list element each time the display is updated
@@ -129,16 +135,21 @@ window.onload = function() {
 
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
-    let objectStore = db.transaction('notes_os').objectStore('notes_os');
+    let objectStore = db.transaction('shearim_os').objectStore('shearim_os');
     objectStore.openCursor().onsuccess = function(e) {
       // Get a reference to the cursor
       let cursor = e.target.result;
+
+      console.log("CURSOR");
+      console.log(cursor);
 
       // If there is still another data item to iterate through, keep running this code
       if(cursor) {
         // Create a list item, h3, and p to put each data item inside when displaying it
         // structure the HTML fragment, and append it inside the list
         let listItem = document.createElement('li');
+        listItem.classList.add("mystyle");
+
         let h3 = document.createElement('h3');
         let para = document.createElement('p');
 
@@ -147,13 +158,34 @@ window.onload = function() {
         list.appendChild(listItem);
 
         // Put the data from the cursor inside the h3 and para
-        h3.textContent = cursor.value.clientName;
-        para.textContent = cursor.value.invoiceNumber;
+        h3.innerHTML = cursor.value.clientName;
+        para.innerHTML = "Invoice number: " + cursor.value.invoiceNumber + "<br>" + 
+        				"Payment method: " + cursor.value.paymentMethod + "<br>" + 
+        				"Payment date: " + cursor.value.paymentDate + "<br>" + 
+        				"Paid by: " +cursor.value.paiedBy + "<br>" + 
+        				"Amount: " + cursor.value.amount;
 
-        para.textContent = cursor.value.paymentMethod;
-        para.textContent = cursor.value.paymentDate;
-        para.textContent = cursor.value.paiedBy;
-        para.textContent = cursor.value.amount;
+
+        console.log("totalAmount: " + totalAmount);
+
+        console.log("cursor.value.amount is: " + cursor.value.amount);
+
+        var number = Number(cursor.value.amount);
+        console.log("cursor.value.amount converted to number");
+
+        console.log("number isInteger? " + Number.isInteger(number));
+        console.log("number: " + number);
+
+
+        console.log("totalAmount isInteger? " + Number.isInteger(totalAmount));
+
+        totalAmount += number;
+        console.log("totalAmount: " + totalAmount);
+
+
+
+        summaryInput.setAttribute("value", totalAmount.toString(10));
+
 
         // Store the ID of the data item inside an attribute on the listItem, so we know
         // which item it corresponds to. This will be useful later when we want to delete items
@@ -191,8 +223,8 @@ window.onload = function() {
     let noteId = Number(e.target.parentNode.getAttribute('data-note-id'));
 
     // open a database transaction and delete the task, finding it using the id we retrieved above
-    let transaction = db.transaction(['notes_os'], 'readwrite');
-    let objectStore = transaction.objectStore('notes_os');
+    let transaction = db.transaction(['shearim_os'], 'readwrite');
+    let objectStore = transaction.objectStore('shearim_os');
     let request = objectStore.delete(noteId);
 
     // report that the data item has been deleted
@@ -210,6 +242,7 @@ window.onload = function() {
       }
     };
   }
+
 
 };
 

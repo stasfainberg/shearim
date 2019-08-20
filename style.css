@@ -15,7 +15,7 @@ header, footer {
 
 }
 
-#content {
+.container {
   background: #ddd;
   padding: 20px 20px;
   font-size: 1.5rem;
@@ -34,8 +34,35 @@ img {
 
 ul {
   list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 div {
   margin-bottom: 10px;
 }
+
+/* This class added to each il*/
+.mystyle {
+  border: 3px solid #1c4563;
+  margin: 10px 0 10px 0;
+  padding: 3px 3px 10px 10px;
+}
+
+#selectPaymentMethod {
+  width: 260px;
+}
+
+input[type='text']{
+  text-align:right;
+}
+
+input[type='number']{
+  text-align:right;
+}
+
+h2 {
+  text-align:right;
+}
+
+
