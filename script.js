@@ -9,9 +9,12 @@ const submitBtn = document.querySelector('form button');
 const clientNameInput = document.querySelector('#clientName');
 const invoiceNumberInput = document.querySelector('#invoiceNumber');
 const paymentMethodInput = document.querySelector('#paymentMethod');
+const paymentMethodSelectInput = document.querySelector('#paymentMethodSelect');
 
-const paymentDateInput = document.querySelector('#paymentDate');
+
+const paymentDateInput = document.querySelector('#paymentDateInput');
 const paiedByInput = document.querySelector('#paiedBy');
+const paiedBySelectInput = document.querySelector('#paiedBySelect');
 const amountInput = document.querySelector('#amount');
 
 //Summary Section 
@@ -46,7 +49,8 @@ document.getElementById("clientName").focus();
 var myVar;
 let i = 0;
 
-
+var paymentMethodValue;
+var paiedByValue;
 
 
 
@@ -126,12 +130,51 @@ window.onload = function() {
     // prevent default - we don't want the form to submit in the conventional way
     e.preventDefault();
 
+
+
+
+
+    var paymentMethodSelectSelector = document.getElementById('paymentMethodSelect');
+    var paymentMethodSelectValue = paymentMethodSelectSelector[paymentMethodSelectSelector.selectedIndex].value;
+
+    switch (Number(paymentMethodSelectValue)) {
+      case 1:
+        paymentMethodValue = "מזומן";
+        break;
+      case 2:
+        paymentMethodValue = "צ'ק";
+        break;
+      case 3:
+        paymentMethodValue = "כרטיס אשראי";
+        break;
+      case 4:
+        paymentMethodValue = "העברה בנקאית";
+        break;
+    }
+
+
+    var paiedBySelectInputSelector = document.getElementById('paiedBySelect');
+    var paiedBySelectInputValue = paiedBySelectInputSelector[paiedBySelectInputSelector.selectedIndex].value;
+
+    switch (Number(paiedBySelectInputValue)) {
+      case 1:
+        paiedByValue = "שליח";
+        break;
+      case 2:
+        paiedByValue = "דואר";
+        break;
+      case 3:
+        paiedByValue = "טכנאי";
+        break;
+    }
+
+
     // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
     let newItem = { clientName: clientNameInput.value, 
                     invoiceNumber: invoiceNumberInput.value, 
-                    paymentMethod: paymentMethodInput.value,
+                    paymentMethod: paymentMethodValue,
                     paymentDate: paymentDateInput.value,
-                    paiedBy: paiedByInput.value,
+                    paiedBy: paiedByValue,
                     amount: amountInput.value
                   };
 
@@ -150,9 +193,9 @@ window.onload = function() {
       // Clear the form, ready for adding the next entry
       clientNameInput.value = '';
       invoiceNumberInput.value = '';
-      paymentMethodInput.value = '';
+      paymentMethodSelectInput.value = 'שולם באמצעות';
       paymentDateInput.value = '';
-      paiedByInput.value = '';
+      paiedBySelectInput.value = 'שולם על ידי';
       amountInput.value = '';
 
       totalAmount = 0;
@@ -295,8 +338,8 @@ window.onload = function() {
 
         //Inseart data in to the columns of the row         
         tableColumnAmount.innerHTML = cursor.value.amount;
-        tableColumnDate.innerHTML = cursor.value.paiedBy;
-        tableColumnPaiedBy.innerHTML = cursor.value.paymentDate;
+        tableColumnDate.innerHTML = cursor.value.paymentDate;
+        tableColumnPaiedBy.innerHTML = cursor.value.paiedBy;
         tableColumnPaymentMethod.innerHTML = cursor.value.paymentMethod;
         tableColumnInvoiceNumber.innerHTML = cursor.value.invoiceNumber;
         tableColumnClientName.innerHTML = cursor.value.clientName;

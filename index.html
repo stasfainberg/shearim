@@ -43,19 +43,18 @@
 
           <div class="row">
             <div class="col-sm-4">
-              <label for="paymentMethod"></label>
-            <!--
-              <select id="selectPaymentMethod">
-                <option selected>Choose...</option>
-                <option value="1">Cash</option>
-                <option value="2">Check</option>
-                <option value="3">Credit Card</option>
+              <select id="paymentMethodSelect" class="selectClasses">
+                <option selected>שולם באמצעות</option>
+                <option value="1">מזומן</option>
+                <option value="2">צ'ק</option>
+                <option value="3">כרטיס אשראי</option>
+                <option value="4">העברה בנקאית</option>
               </select>
-            -->
+              <!--
               <input id="paymentMethod" class="form-control" type="text" tabindex="3" placeholder="תשלום באמצעות" maxlength="20" required>
+              -->
             </div>
             <div class="col-sm-4">
-              <label for="invoiceNumber"></label>
               <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="20" required>
             </div>
             <div class="col-sm-4">
@@ -67,16 +66,25 @@
 
           <div class="row">
             <div class="col-sm-4">
-              <label for="amount"></label>
               <input id="amount" class="form-control" type="number" min="0" step="1" tabindex="6" placeholder="הסכום לתשלום" maxlength="20" required>
             </div>
             <div class="col-sm-4">
               <label for="paymentDate"></label>
+              <input type="date" name="paymentDateInput" id="paymentDateInput">
+              <!--
               <input id="paymentDate" class="form-control" type="text" tabindex="5" placeholder="תאריך התשלום" maxlength="20" required>
+              -->
             </div>
             <div class="col-sm-4">
-              <label for="paiedBy"></label>
+              <select id="paiedBySelect" class="selectClasses">
+                <option selected>שולם על ידי</option>
+                <option value="1">שליח</option>
+                <option value="2">דואר</option>
+                <option value="3">טכנאי</option>
+              </select>
+              <!--  
               <input id="paiedBy" class="form-control" type="text" tabindex="4" placeholder="שולם על ידי" maxlength="20" required>
+              -->
             </div>
           </div>
 
@@ -137,7 +145,6 @@
 
         <div id="loader"></div>
 
-        
         <div style="display:none;" id="myDiv" class="animate-bottom">
           <table id="myTable" class="table table-hover">
             <thead align="right">
@@ -146,7 +153,7 @@
                 <th>סכום</th>
                 <th>תאריך התשלום</th>
                 <th>שולם על ידי</th>
-                <th>תשלום באמצעות</th>
+                <th>שולם באמצעות</th>
                 <th>מספר חשבונית</th>
                 <th>שם לקוח</th>
               </tr>
@@ -156,20 +163,12 @@
           </table>
         </div>
 
-
-
-
-
-
       </div>
 
     
       <div id="myList">
         <ul ></ul>
-      </div>   
-     
-
-
+      </div> 
 
       
       <footer>

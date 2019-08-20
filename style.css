@@ -50,7 +50,7 @@ div {
   padding: 3px 3px 10px 10px;
 }
 
-#selectPaymentMethod {
+.selectClasses {
   width: 260px;
 }
 
