@@ -1,3 +1,4 @@
+
 /********************************** Create needed constants ******************************/
 
 //Form Section
@@ -15,10 +16,12 @@ const amountInput = document.querySelector('#amount');
 
 //Summary Section 
 const totalAmountInput = document.querySelector('#totalAmount');
+const totalClientsInput = document.querySelector('#totalClients');
 
 //Data Section
 const list = document.querySelector('ul');
 const tbody = document.querySelector('tbody');
+const table = document.querySelector('#myTable');
 
 
 
@@ -34,11 +37,12 @@ let db;
 
 //ReadOnly total amount  
 var totalAmount = Number("0");
-
+var totalClients = 0;
 //Focus page on first input
 document.getElementById("clientName").focus();
 
-
+var myVar;
+let i = 0;
 
 //Console.log() - for testing
 console.log("FORM");
@@ -46,6 +50,18 @@ console.log(form);
 
 console.log("UL");
 console.log(list);
+
+
+
+
+
+
+
+
+        
+
+
+
 
 
 
@@ -72,7 +88,12 @@ window.onload = function() {
     db = request.result;
 
     // Run the displayData() function to display the notes already in the IDB
-    displayData();
+    //displayData();
+
+
+    myVar = setTimeout(displayData, 1000);
+
+
   };
 
 
@@ -124,6 +145,10 @@ window.onload = function() {
 
     // Make a request to add our newItem object to the object store
     var request = objectStore.add(newItem);
+
+
+
+
     request.onsuccess = function() {
       // Clear the form, ready for adding the next entry
       clientNameInput.value = '';
@@ -134,12 +159,24 @@ window.onload = function() {
       amountInput.value = '';
     };
 
+
+
+
+
+
+
+
     // Report on the success of the transaction completing, when everything is done
     transaction.oncomplete = function() {
       console.log('Transaction completed: database modification finished.');
 
       // update the display of data to show the newly added item, by running displayData() again.
-      displayData();
+      //displayData();
+
+      document.getElementById("loader").style.display = "block";
+      document.getElementById("myDiv").style.display = "none";
+      myVar = setTimeout(displayData, 1000);
+
     };
 
     transaction.onerror = function() {
@@ -151,15 +188,46 @@ window.onload = function() {
 
   // Define the displayData() function
   function displayData() {
+
+
     // Here we empty the contents of the list element each time the display is updated
-    // If you ddn't do this, you'd get duplicates listed each time a new note is added
+    // If you don't do this, you'd get duplicates listed each time a new note is added
     while (list.firstChild) {
       list.removeChild(list.firstChild);
     }
 
+    console.log("before table deletion");
+    while(i < totalClients)
+    {
+      console.log("for - before");
+      table.deleteRow(i);
+      i++;
+      console.log("for - after");
+    }
+
+    console.log("after table deletion");
+    i = 0;
+
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("myDiv").style.display = "block";
+    
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
     let objectStore = db.transaction('shearim_os').objectStore('shearim_os');
+
+
+
+    console.log("Total clients: ");
+    totalClients = objectStore.count();
+    totalClients.onsuccess = function() {        
+      console.log(totalClients.result);
+      totalClientsInput.setAttribute("value", totalClients.result);
+    }
+
+
+
+
+
     objectStore.openCursor().onsuccess = function(e) {
       // Get a reference to the cursor
       let cursor = e.target.result;
@@ -253,29 +321,30 @@ window.onload = function() {
 
         /******************************** Create Unordered list Data ***************************************/
         
+      
         //Create list item
-        let listItem = document.createElement('li');
+        //let listItem = document.createElement('li');
         //Add class to this list item
-        listItem.classList.add("mystyle");
+        //listItem.classList.add("mystyle");
 
         //create heading3
-        let h3 = document.createElement('h3');
+        //let h3 = document.createElement('h3');
         //Create paragraph 
-        let para = document.createElement('p');
+        //let para = document.createElement('p');
 
-        listItem.appendChild(h3);
-        listItem.appendChild(para);
-        list.appendChild(listItem);
+        //listItem.appendChild(h3);
+        //listItem.appendChild(para);
+        //list.appendChild(listItem);
 
         // Put the data from the cursor inside the h3 and para
-        h3.innerHTML = cursor.value.clientName;
-        para.innerHTML = "Invoice number: " + cursor.value.invoiceNumber + "<br>" + 
-        				"Payment method: " + cursor.value.paymentMethod + "<br>" + 
-        				"Payment date: " + cursor.value.paymentDate + "<br>" + 
-        				"Paid by: " +cursor.value.paiedBy + "<br>" + 
-        				"Amount: " + cursor.value.amount;
+        //h3.innerHTML = cursor.value.clientName;
+        //para.innerHTML = "Invoice number: " + cursor.value.invoiceNumber + "<br>" + 
+        //				"Payment method: " + cursor.value.paymentMethod + "<br>" + 
+        //				"Payment date: " + cursor.value.paymentDate + "<br>" + 
+        //				"Paid by: " +cursor.value.paiedBy + "<br>" + 
+        //				"Amount: " + cursor.value.amount;
 
-
+      
 
         /************************* Display Data in Summary Section ********************************/
         console.log("totalAmount: " + totalAmount);
@@ -302,22 +371,29 @@ window.onload = function() {
 
         // Store the ID of the data item inside an attribute on the listItem, so we know
         // which item it corresponds to. This will be useful later when we want to delete items
-        listItem.setAttribute('data-note-id', cursor.value.id);
+        //listItem.setAttribute('data-note-id', cursor.value.id);
         tableRow.setAttribute('data-note-id', cursor.value.id);
 
 
         // Create a button and place it inside each listItem
-        let deleteBtn = document.createElement('button');
+        //let deleteBtn = document.createElement('button');
         
-        listItem.appendChild(deleteBtn);
-        deleteBtn.textContent = 'Delete';
+        //listItem.appendChild(deleteBtn);
+        //deleteBtn.textContent = 'Delete';
 
         // Set an event handler so that when the button is clicked, the deleteItem()
         // function is run
 
 
-        deleteBtn.onclick = deleteItem;
+        //deleteBtn.onclick = deleteItem;
         deleteButton.onclick = deleteItem;
+
+
+        /************************************ Display Summary Info *************************************/
+
+
+
+
 
 
         // Iterate to the next item in the cursor
@@ -325,50 +401,73 @@ window.onload = function() {
       } else {
         // Again, if list item is empty, display a 'No notes stored' message
         if(!list.firstChild) {
-          let listItem = document.createElement('li');
-          listItem.textContent = 'No notes stored.'
-          list.appendChild(listItem);
+          //let listItem = document.createElement('li');
+          //listItem.textContent = 'No notes stored.'
+          //list.appendChild(listItem);
         }
         // if there are no more cursor items to iterate through, say so
         console.log('Notes all displayed');
       }
+
+      console.log("finish Cursor - START REFRESH");
+      console.log("END REFRESH");
+
+
     };
+          
+
+
+
   }
+
+
 
   // Define the deleteItem() function
   function deleteItem(e) {
 
-    // prevent default - we don't want to catch the the Button event.
-    e.preventDefault();
+    var result = confirm("Want to delete?");
+    if (result) {
+      // prevent default - we don't want to catch the the Button event.
+      e.preventDefault();
 
-    // retrieve the name of the task we want to delete. We need
-    // to convert it to a number before trying it use it with IDB; IDB key
-    // values are type-sensitive.
-    let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
-    console.log("noteId" + noteId);
+      // retrieve the name of the task we want to delete. We need
+      // to convert it to a number before trying it use it with IDB; IDB key
+      // values are type-sensitive.
+      let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+      console.log("noteId" + noteId);
 
 
-    // open a database transaction and delete the task, finding it using the id we retrieved above
-    let transaction = db.transaction(['shearim_os'], 'readwrite');
-    let objectStore = transaction.objectStore('shearim_os');
-    let request = objectStore.delete(noteId);
+      // open a database transaction and delete the task, finding it using the id we retrieved above
+      let transaction = db.transaction(['shearim_os'], 'readwrite');
+      let objectStore = transaction.objectStore('shearim_os');
+      let request = objectStore.delete(noteId);
 
-    // report that the data item has been deleted
-    transaction.oncomplete = function() {
-      // delete the parent of the button
-      // which is the list item, so it is no longer displayed
-      e.target.parentNode.parentNode.removeChild(e.target.parentNode);
-      console.log('Note ' + noteId + ' deleted.');
+      // report that the data item has been deleted
+      transaction.oncomplete = function() {
+        // delete the parent of the button
+        // which is the list item, so it is no longer displayed
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        console.log('Note ' + noteId + ' deleted.');
 
-      // Again, if list item is empty, display a 'No notes stored' message
-      if(!list.firstChild) {
-        let listItem = document.createElement('li');
-        listItem.textContent = 'No notes stored.';
-        list.appendChild(listItem);
-      }
-    };
+
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("myDiv").style.display = "none";
+        myVar = setTimeout(displayData, 1000);
+
+        // Again, if list item is empty, display a 'No notes stored' message
+        if(!list.firstChild) {
+          let listItem = document.createElement('li');
+          listItem.textContent = 'No notes stored.';
+          list.appendChild(listItem);
+        }
+      };
+    }
   }
 
 
 };
+
+
+
+
 
