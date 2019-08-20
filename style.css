@@ -1,0 +1,41 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+header, footer {
+  background-color: #1c4563 ;
+  color: white;
+  line-height: 100px;
+  padding: 0 20px;
+
+}
+
+#content {
+  background: #ddd;
+  padding: 20px 20px;
+  font-size: 1.5rem;
+  font-weight: 100;
+  line-height: 1.2;
+}
+
+h1 {
+  text-align: center;
+  padding: 0 0 2px 0;
+ }
+
+img {
+  padding: 0 0 0 30px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+div {
+  margin-bottom: 10px;
+}
