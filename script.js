@@ -1,8 +1,10 @@
 // Create needed constants
+
+/********************** Form Section **************************/
 const form = document.querySelector('form');
 const submitBtn = document.querySelector('form button');
-const list = document.querySelector('ul');
 
+/******************* New Client Section ***********************/
 const clientNameInput = document.querySelector('#clientName');
 const invoiceNumberInput = document.querySelector('#invoiceNumber');
 const paymentMethodInput = document.querySelector('#paymentMethod');
@@ -11,25 +13,46 @@ const paymentDateInput = document.querySelector('#paymentDate');
 const paiedByInput = document.querySelector('#paiedBy');
 const amountInput = document.querySelector('#amount');
 
-const summaryInput = document.querySelector('#summary');
+/******************** Summary Section ************************/
+const totalAmountInput = document.querySelector('#totalAmount');
+
+/********************** Data Section *************************/
+const list = document.querySelector('ul');
+const tbody = document.querySelector('tbody');
+
+
+
+
+
+
+
+
 
 
 // Create an instance of a db object for us to store the open database in
 let db;
+
+
+//ReadOnly 
 var totalAmount = Number("0");
 
 
+//Focus page on first input
+document.getElementById("clientName").focus();
+
+
+
+//Console.log() - for testing
 console.log("FORM");
 console.log(form);
 
 console.log("UL");
 console.log(list);
 
-document.getElementById("clientName").focus();
 
 
 
-
+//Main function
 window.onload = function() {
   // Open our database; it is created if it doesn't already exist
   // (see onupgradeneeded below)
@@ -147,10 +170,96 @@ window.onload = function() {
       if(cursor) {
         // Create a list item, h3, and p to put each data item inside when displaying it
         // structure the HTML fragment, and append it inside the list
+
+
+        /************************************* Create Table Data ****************************************/
+
+        //Create row element
+        let tableRow = document.createElement('tr');
+
+        //Create columns elements
+        let tableColumnActions = document.createElement('td');
+        let tableColumnAmount = document.createElement('td');
+        let tableColumnDate = document.createElement('td');
+        let tableColumnPaiedBy = document.createElement('td');
+        let tableColumnPaymentMethod = document.createElement('td');
+        let tableColumnInvoiceNumber = document.createElement('td');
+        let tableColumnClientName = document.createElement('td');
+
+        
+        //Create Confirm Button
+        let confirmButton = document.createElement('button');
+        confirmButton.classList.add('btn', 'btn-success', 'btn-sm');
+        confirmButton.setAttribute("id", "confirmButton");
+        confirmButton.setAttribute("style", "font-size:4px");
+
+        //Create Confirm Icon
+        let confirmIconTag = document.createElement('i');
+        confirmIconTag.classList.add("material-icons");
+        confirmIconTag.innerText = "done";
+
+
+
+        //Create Delete Button
+        let deleteButton = document.createElement('button');
+        deleteButton.classList.add('btn', 'btn-secondary', 'btn-sm');
+        deleteButton.setAttribute("id", "deleteButton");
+        deleteButton.setAttribute("style", "font-size:4px");
+        //deleteButton.setAttribute("onclick", deleteItem);
+
+        //Create Delete Icon
+        let deleteIconTag = document.createElement('i');
+        deleteIconTag.classList.add("material-icons");
+        deleteIconTag.innerText = "delete";
+
+
+
+        //Inseart Delete and Confirm icons into Delete and Confirm buttons 
+        confirmButton.appendChild(confirmIconTag);
+        deleteButton.appendChild(deleteIconTag);
+        
+
+        //Inseart Delete and Confirm buttons into Action column 
+        tableColumnActions.appendChild(confirmButton)
+        tableColumnActions.appendChild(deleteButton)
+
+
+        //Append all created columns in to one row
+        tableRow.appendChild(tableColumnActions);
+        tableRow.appendChild(tableColumnAmount);
+        tableRow.appendChild(tableColumnDate);
+        tableRow.appendChild(tableColumnPaiedBy);
+        tableRow.appendChild(tableColumnPaymentMethod);
+        tableRow.appendChild(tableColumnInvoiceNumber);
+        tableRow.appendChild(tableColumnClientName);
+
+
+        //Append the row in to the table
+        tbody.appendChild(tableRow);
+
+
+        //Inseart data in to the columns of the row         
+        tableColumnAmount.innerHTML = cursor.value.amount;
+        tableColumnDate.innerHTML = cursor.value.paiedBy;
+        tableColumnPaiedBy.innerHTML = cursor.value.paymentDate;
+        tableColumnPaymentMethod.innerHTML = cursor.value.paymentMethod;
+        tableColumnInvoiceNumber.innerHTML = cursor.value.invoiceNumber;
+        tableColumnClientName.innerHTML = cursor.value.clientName;
+
+
+
+
+
+        /******************************** Create Unordered list Data ***************************************/
+        
+        //Create list item
         let listItem = document.createElement('li');
+        //Add class to this list item
         listItem.classList.add("mystyle");
 
+        //create heading3
         let h3 = document.createElement('h3');
+        //Create paragraph 
         let para = document.createElement('p');
 
         listItem.appendChild(h3);
@@ -166,25 +275,28 @@ window.onload = function() {
         				"Amount: " + cursor.value.amount;
 
 
+
+        /************************* Display Data in Summary Section ********************************/
         console.log("totalAmount: " + totalAmount);
 
         console.log("cursor.value.amount is: " + cursor.value.amount);
 
-        var number = Number(cursor.value.amount);
+        //var number = Number(cursor.value.amount);
         console.log("cursor.value.amount converted to number");
 
-        console.log("number isInteger? " + Number.isInteger(number));
-        console.log("number: " + number);
-
+        //console.log("number isInteger? " + Number.isInteger(number));
+        //console.log("number: " + number);
 
         console.log("totalAmount isInteger? " + Number.isInteger(totalAmount));
 
-        totalAmount += number;
+        totalAmount += Number(cursor.value.amount);
         console.log("totalAmount: " + totalAmount);
 
+        totalAmountInput.setAttribute("value", totalAmount.toString(10));
 
 
-        summaryInput.setAttribute("value", totalAmount.toString(10));
+
+
 
 
         // Store the ID of the data item inside an attribute on the listItem, so we know
@@ -193,12 +305,17 @@ window.onload = function() {
 
         // Create a button and place it inside each listItem
         let deleteBtn = document.createElement('button');
+        
         listItem.appendChild(deleteBtn);
         deleteBtn.textContent = 'Delete';
 
         // Set an event handler so that when the button is clicked, the deleteItem()
         // function is run
+
+
         deleteBtn.onclick = deleteItem;
+        deleteButton.onclick = deleteItem;
+
 
         // Iterate to the next item in the cursor
         cursor.continue();

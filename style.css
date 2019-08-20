@@ -15,12 +15,13 @@ header, footer {
 
 }
 
-.container {
-  background: #ddd;
+.myContainer {
+  background: #dde;
   padding: 20px 20px;
   font-size: 1.5rem;
   font-weight: 100;
   line-height: 1.2;
+  
 }
 
 h1 {
@@ -65,4 +66,11 @@ h2 {
   text-align:right;
 }
 
+#deleteButton {
+  margin: 3px;
+}
+
+#confirmButton {
+  margin: 3px;
+}
 
