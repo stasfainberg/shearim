@@ -1,10 +1,10 @@
-// Create needed constants
+/********************************** Create needed constants ******************************/
 
-/********************** Form Section **************************/
+//Form Section
 const form = document.querySelector('form');
 const submitBtn = document.querySelector('form button');
 
-/******************* New Client Section ***********************/
+//New Client Section 
 const clientNameInput = document.querySelector('#clientName');
 const invoiceNumberInput = document.querySelector('#invoiceNumber');
 const paymentMethodInput = document.querySelector('#paymentMethod');
@@ -13,10 +13,10 @@ const paymentDateInput = document.querySelector('#paymentDate');
 const paiedByInput = document.querySelector('#paiedBy');
 const amountInput = document.querySelector('#amount');
 
-/******************** Summary Section ************************/
+//Summary Section 
 const totalAmountInput = document.querySelector('#totalAmount');
 
-/********************** Data Section *************************/
+//Data Section
 const list = document.querySelector('ul');
 const tbody = document.querySelector('tbody');
 
@@ -28,14 +28,12 @@ const tbody = document.querySelector('tbody');
 
 
 
-
+/********************************** Define Variables ******************************/
 // Create an instance of a db object for us to store the open database in
 let db;
 
-
-//ReadOnly 
+//ReadOnly total amount  
 var totalAmount = Number("0");
-
 
 //Focus page on first input
 document.getElementById("clientName").focus();
@@ -51,6 +49,9 @@ console.log(list);
 
 
 
+
+
+/********************************************************** Logic *********************************************************/
 
 //Main function
 window.onload = function() {
@@ -302,6 +303,8 @@ window.onload = function() {
         // Store the ID of the data item inside an attribute on the listItem, so we know
         // which item it corresponds to. This will be useful later when we want to delete items
         listItem.setAttribute('data-note-id', cursor.value.id);
+        tableRow.setAttribute('data-note-id', cursor.value.id);
+
 
         // Create a button and place it inside each listItem
         let deleteBtn = document.createElement('button');
@@ -334,10 +337,16 @@ window.onload = function() {
 
   // Define the deleteItem() function
   function deleteItem(e) {
+
+    // prevent default - we don't want to catch the the Button event.
+    e.preventDefault();
+
     // retrieve the name of the task we want to delete. We need
     // to convert it to a number before trying it use it with IDB; IDB key
     // values are type-sensitive.
-    let noteId = Number(e.target.parentNode.getAttribute('data-note-id'));
+    let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+    console.log("noteId" + noteId);
+
 
     // open a database transaction and delete the task, finding it using the id we retrieved above
     let transaction = db.transaction(['shearim_os'], 'readwrite');
