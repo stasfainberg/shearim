@@ -393,6 +393,7 @@ window.onload = function() {
         // which item it corresponds to. This will be useful later when we want to delete items
         //listItem.setAttribute('data-note-id', cursor.value.id);
         tableRow.setAttribute('data-note-id', cursor.value.id);
+        tableRow.setAttribute('id', cursor.value.id);
         
 
         // Create a button and place it inside each listItem
@@ -409,7 +410,7 @@ window.onload = function() {
         deleteButton.onclick = deleteItem;
         
         //confirmBtn.onclick = deleteItem;
-        confirmButton.onclick = confirmPaied;
+        confirmButton.onclick = clientPaied;
 
         
         
@@ -541,18 +542,22 @@ window.onload = function() {
   }
 
 
-  function confirmPaied(e){
+  function clientPaied(e){
 
-    // prevent default - we don't want to catch the the Button event.
-    e.preventDefault();
+    var result01 = confirm("האם אתה בטוח?");
+    if (result01) {
+      // prevent default - we don't want to catch the the Button event.
+      e.preventDefault();
 
-    // retrieve the name of the task we want to delete. We need
-    // to convert it to a number before trying it use it with IDB; IDB key
-    // values are type-sensitive.
-    let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
-    console.log("noteId" + noteId);
+      // retrieve the name of the task we want to delete. We need
+      // to convert it to a number before trying it use it with IDB; IDB key
+      // values are type-sensitive.
+      let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+      console.log("noteId" + noteId);
 
-    //e.target.parentNode.parentNode.parentNode.toggleClass("clicked");
+      
+      document.getElementById(noteId).classList.toggle("clicked");
+    }
 
 
 
