@@ -445,8 +445,20 @@ window.onload = function() {
         
 
 
-        /************************* Paint table rows of clients who marked as paied ********************************/
 
+        if(cursor.value.isPaied == 1)
+        {
+          console.log("if(cursor.value.isPaied == 1)");
+       
+          document.getElementById(cursor.value.id).classList.add("clicked");
+        }
+        
+        if(cursor.value.isPaied == 0)
+        {
+          console.log("if(cursor.value.isPaied == 0)");
+       
+          document.getElementById(cursor.value.id).classList.add("Unlicked");
+        }
 
         
 
