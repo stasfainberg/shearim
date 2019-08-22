@@ -236,20 +236,11 @@ window.onload = function() {
 
   // Define the displayData() function
   function displayData() {
-    // Here we empty the contents of the list element each time the display is updated
-    // If you don't do this, you'd get duplicates listed each time a new note is added
-    //while (list.firstChild) {
-    //  list.removeChild(list.firstChild);
-    //}
-
-
-    // Here we empty the contents of the list element each time the display is updated
+    // Here we empty the contents of the table element each time the display is updated
     // If you don't do this, you'd get duplicates listed each time a new note is added
     while (tbody.firstChild) {
       tbody.removeChild(tbody.firstChild);
     }
-
-
     
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
@@ -353,40 +344,6 @@ window.onload = function() {
 
 
 
-
-        /******************************** Create Unordered list Data ***************************************/
-        
-      
-        //Create list item
-        //let listItem = document.createElement('li');
-        //Add class to this list item
-        //listItem.classList.add("mystyle");
-
-        //create heading3
-        //let h3 = document.createElement('h3');
-        //Create paragraph 
-        //let para = document.createElement('p');
-
-        //listItem.appendChild(h3);
-        //listItem.appendChild(para);
-        //list.appendChild(listItem);
-
-        // Put the data from the cursor inside the h3 and para
-        //h3.innerHTML = cursor.value.clientName;
-        //para.innerHTML = "Invoice number: " + cursor.value.invoiceNumber + "<br>" + 
-        //				"Payment method: " + cursor.value.paymentMethod + "<br>" + 
-        //				"Payment date: " + cursor.value.paymentDate + "<br>" + 
-        //				"Paid by: " +cursor.value.paiedBy + "<br>" + 
-        //				"Amount: " + cursor.value.amount;
-
-      
-
-        
-
-
-
-
-
         // Store the ID of the data item inside an attribute on the listItem, so we know
         // which item it corresponds to. This will be useful later when we want to delete items
         //listItem.setAttribute('data-note-id', cursor.value.id);
@@ -394,17 +351,8 @@ window.onload = function() {
         tableRow.setAttribute('id', cursor.value.id);
         
 
-        // Create a button and place it inside each listItem
-        //let deleteBtn = document.createElement('button');
-        
-        //listItem.appendChild(deleteBtn);
-        //deleteBtn.textContent = 'Delete';
-
         // Set an event handler so that when the button is clicked, the deleteItem()
         // function is run
-
-
-        //deleteBtn.onclick = deleteItem;
         deleteButton.onclick = deleteItem;
         
         //confirmBtn.onclick = deleteItem;
@@ -447,16 +395,12 @@ window.onload = function() {
 
 
         if(cursor.value.isPaied == 1)
-        {
-          console.log("if(cursor.value.isPaied == 1)");
-       
+        {       
           document.getElementById(cursor.value.id).classList.add("clicked");
         }
         
         if(cursor.value.isPaied == 0)
-        {
-          console.log("if(cursor.value.isPaied == 0)");
-       
+        {       
           document.getElementById(cursor.value.id).classList.add("Unlicked");
         }
 
@@ -494,6 +438,7 @@ window.onload = function() {
     document.getElementById("loader").style.display = "none";
     document.getElementById("myDiv").style.display = "block";
 
+    document.getElementById("clientName").focus();
 
   }
 
@@ -597,6 +542,7 @@ window.onload = function() {
         
           // When this new request succeeds, run the displayData() function again to update the display
           updateIDRequest.onsuccess = function() {
+            totalAmountValue = 0;
             displayData();
           };
 
@@ -613,6 +559,7 @@ window.onload = function() {
         
           // When this new request succeeds, run the displayData() function again to update the display
           updateIDRequest.onsuccess = function() {
+            totalAmountValue = 0;
             displayData();
           }
         }
