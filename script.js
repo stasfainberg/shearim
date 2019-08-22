@@ -554,8 +554,57 @@ window.onload = function() {
       // prevent default - we don't want to catch the the Button event.
       e.preventDefault();
 
+      // retrieve the name of the client we want to mark as paied. We need
+      // to convert it to a number before trying it use it with IDB; IDB key
+      // values are type-sensitive.
+      let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+
+      let transaction = db.transaction(['shearim_os'], 'readwrite');
       
+      // call an object store that's already been added to the database
+      let objectStore = transaction.objectStore('shearim_os');
+
+      // Get the to-do list object that has this id
+      var objectStoreIDRequest = objectStore.get(noteId);
+
+
+      objectStoreIDRequest.onsuccess = function() {
+        // Grab the data object returned as the result
+        var data = objectStoreIDRequest.result;
       
+        if(data.isPaied == 0)
+        {
+          // Update the isPaied value in the object to 1
+          data.isPaied = 1;
+        
+          // Create another request that inserts the item back into the database
+          var updateIDRequest = objectStore.put(data);
+        
+          // Log the transaction that originated this request
+          console.log("The transaction that originated this request is " + updateIDRequest.transaction);
+        
+          // When this new request succeeds, run the displayData() function again to update the display
+          updateIDRequest.onsuccess = function() {
+            displayData();
+          };
+
+        } else
+        {
+          // Update the isPaied value in the object to 0
+          data.isPaied = 0;
+        
+          // Create another request that inserts the item back into the database
+          var updateIDRequest = objectStore.put(data);
+        
+          // Log the transaction that originated this request
+          console.log("The transaction that originated this request is " + updateIDRequest.transaction);
+        
+          // When this new request succeeds, run the displayData() function again to update the display
+          updateIDRequest.onsuccess = function() {
+            displayData();
+          }
+        }
+      }
     }
   }
 
