@@ -452,7 +452,7 @@ window.onload = function() {
   // Define the deleteItem() function
   function deleteItem(e) {
 
-    var result = confirm("האם אתה בטוח?");
+    var result = confirm("האם בטוח למחוק?");
     if (result) {
       // prevent default - we don't want to catch the the Button event.
       e.preventDefault();
@@ -461,8 +461,6 @@ window.onload = function() {
       // to convert it to a number before trying it use it with IDB; IDB key
       // values are type-sensitive.
       let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
-      console.log("noteId" + noteId);
-
 
       // open a database transaction and delete the task, finding it using the id we retrieved above
       let transaction = db.transaction(['shearim_os'], 'readwrite');
@@ -506,29 +504,30 @@ window.onload = function() {
 
   function clientConfirm(e){
 
-    var ClientPaiedResult = confirm("האם אתה בטוח?");
-    if (ClientPaiedResult) {
-      // prevent default - we don't want to catch the the Button event.
-      e.preventDefault();
+    // prevent default - we don't want to catch the the Button event.
+    e.preventDefault();
 
-      // retrieve the name of the client we want to mark as paied. We need
-      // to convert it to a number before trying it use it with IDB; IDB key
-      // values are type-sensitive.
-      let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
+    // retrieve the name of the client we want to mark as paied. We need
+    // to convert it to a number before trying it use it with IDB; IDB key
+    // values are type-sensitive.
+    let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
 
-      let transaction = db.transaction(['shearim_os'], 'readwrite');
+    let transaction = db.transaction(['shearim_os'], 'readwrite');
+    
+    // call an object store that's already been added to the database
+    let objectStore = transaction.objectStore('shearim_os');
+
+    // Get the to-do list object that has this id
+    var objectStoreIDRequest = objectStore.get(noteId);
+
+
+    objectStoreIDRequest.onsuccess = function() {
+      // Grab the data object returned as the result
+      var data = objectStoreIDRequest.result;
       
-      // call an object store that's already been added to the database
-      let objectStore = transaction.objectStore('shearim_os');
+      var ClientPaiedResult = confirm("האם אתה בטוח ש " + data.clientName + " שילם?");
+      if (ClientPaiedResult) {
 
-      // Get the to-do list object that has this id
-      var objectStoreIDRequest = objectStore.get(noteId);
-
-
-      objectStoreIDRequest.onsuccess = function() {
-        // Grab the data object returned as the result
-        var data = objectStoreIDRequest.result;
-      
         if(data.isPaied == 0)
         {
           // Update the isPaied value in the object to 1
@@ -566,11 +565,6 @@ window.onload = function() {
       }
     }
   }
-
-
-
-
-
 };
 
 
