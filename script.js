@@ -68,8 +68,6 @@ document.getElementById("clientName").focus();
 
 
 
-
-
 /************************************* DataBase Creation | DataBase Modification ***************************************/
 
 //Main function
@@ -114,6 +112,8 @@ window.onload = function() {
     objectStore.createIndex('paymentDate', 'paymentDate', { unique: false });
     objectStore.createIndex('paiedBy', 'paiedBy', { unique: false });
     objectStore.createIndex('amount', 'amount', { unique: false });
+
+    objectStore.createIndex('isPaied', 'isPaied', { unique: false });
 
     console.log('Database setup complete');
   };
@@ -183,7 +183,8 @@ window.onload = function() {
                     paymentMethod: paymentMethodValue,
                     paymentDate: paymentDateInput.value,
                     paiedBy: paiedByValue,
-                    amount: amountInput.value
+                    amount: amountInput.value,
+                    isPaied: 0
                   };
 
     // open a read/write db transaction, ready for adding the data
@@ -277,8 +278,6 @@ window.onload = function() {
         // structure the HTML fragment, and append it inside the list
 
 
-
-
         /************************************* Create Table Data ****************************************/
         //Create row element
         let tableRow = document.createElement('tr');
@@ -355,7 +354,6 @@ window.onload = function() {
 
 
 
-
         /******************************** Create Unordered list Data ***************************************/
         
       
@@ -410,7 +408,7 @@ window.onload = function() {
         deleteButton.onclick = deleteItem;
         
         //confirmBtn.onclick = deleteItem;
-        confirmButton.onclick = clientPaied;
+        confirmButton.onclick = clientConfirm;
 
         
         
@@ -444,6 +442,13 @@ window.onload = function() {
 
 
 
+        
+
+
+        /************************* Paint table rows of clients who marked as paied ********************************/
+
+
+        
 
 
         // Iterate to the next item in the cursor
@@ -490,7 +495,7 @@ window.onload = function() {
   // Define the deleteItem() function
   function deleteItem(e) {
 
-    var result = confirm("Want to delete?");
+    var result = confirm("האם אתה בטוח?");
     if (result) {
       // prevent default - we don't want to catch the the Button event.
       e.preventDefault();
@@ -542,27 +547,70 @@ window.onload = function() {
   }
 
 
-  function clientPaied(e){
+  function clientConfirm(e){
 
-    var result01 = confirm("האם אתה בטוח?");
-    if (result01) {
+    var ClientPaiedResult = confirm("האם אתה בטוח?");
+    if (ClientPaiedResult) {
       // prevent default - we don't want to catch the the Button event.
       e.preventDefault();
 
-      // retrieve the name of the task we want to delete. We need
+      // retrieve the name of the client we want to mark as paied. We need
       // to convert it to a number before trying it use it with IDB; IDB key
       // values are type-sensitive.
       let noteId = Number(e.target.parentNode.parentNode.parentNode.getAttribute('data-note-id'));
-      console.log("noteId" + noteId);
 
+      let transaction = db.transaction(['shearim_os'], 'readwrite');
       
-      document.getElementById(noteId).classList.toggle("clicked");
+      // call an object store that's already been added to the database
+      let objectStore = transaction.objectStore('shearim_os');
+
+      // Get the to-do list object that has this id
+      var objectStoreIDRequest = objectStore.get(noteId);
+
+
+      objectStoreIDRequest.onsuccess = function() {
+        // Grab the data object returned as the result
+        var data = objectStoreIDRequest.result;
+      
+        if(data.isPaied == 0)
+        {
+          // Update the isPaied value in the object to 1
+          data.isPaied = 1;
+        
+          // Create another request that inserts the item back into the database
+          var updateIDRequest = objectStore.put(data);
+        
+          // Log the transaction that originated this request
+          console.log("The transaction that originated this request is " + updateIDRequest.transaction);
+        
+          // When this new request succeeds, run the displayData() function again to update the display
+          updateIDRequest.onsuccess = function() {
+            displayData();
+          };
+
+        } else
+        {
+          // Update the isPaied value in the object to 0
+          data.isPaied = 0;
+        
+          // Create another request that inserts the item back into the database
+          var updateIDRequest = objectStore.put(data);
+        
+          // Log the transaction that originated this request
+          console.log("The transaction that originated this request is " + updateIDRequest.transaction);
+        
+          // When this new request succeeds, run the displayData() function again to update the display
+          updateIDRequest.onsuccess = function() {
+            displayData();
+          }
+        }
+      }
     }
-
-
-
-
   }
+
+
+
+
 
 };
 
