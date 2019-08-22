@@ -367,20 +367,36 @@ window.onload = function() {
         //Setting the value of total amount input
         totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
 
+
+
+
         //Shows the amount was already paied
         paiedAmountInput.setAttribute("value", paiedAmountValue.toString(10));
+
+
+
 
         //Shows the amount which left to be paied
         shouldPayAmountValue = totalAmountValue - paiedAmountValue;
         //Setting the value of client who should pay
         shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
 
+
+
+
+
+
         /****** Second Row *****/
         //
         totalClientsInput.setAttribute("value", totalClientsValue.toString(10));
         
+
+
         //
         totalClientsPaiedInput.setAttribute("value", totalClientsPaiedValue.toString(10));
+
+
+
 
         //Settings the total amount of clients which didn't pay yet by substructing the total amount of clients which paied 
         //from total amount of clients
@@ -410,7 +426,7 @@ window.onload = function() {
         // Iterate to the next item in the cursor
         cursor.continue();
       } else {
-        // Again, if list item is empty, display a 'No notes stored' message
+        // Again, if table is empty, display a 'No notes stored' message
         if(!tbody.firstChild) {
           //let listItem = document.createElement('li');
           //listItem.textContent = 'No notes stored.'
@@ -482,7 +498,7 @@ window.onload = function() {
         
         myVar = setTimeout(displayData, 1000);
 
-        // Again, if list item is empty, display a 'No notes stored' message
+        // Again, if table is empty, display a 'No notes stored' message
         if(!tbody.firstChild) {
           //let listItem = document.createElement('li');
           //listItem.textContent = 'No notes stored.';
@@ -525,14 +541,20 @@ window.onload = function() {
       // Grab the data object returned as the result
       var data = objectStoreIDRequest.result;
       
-      var ClientPaiedResult = confirm("האם אתה בטוח ש " + data.clientName + " שילם?");
+      console.log("data.amount");
+      console.log(data.amount);
+
+
+      var ClientPaiedResult = confirm("האם בטוח לסמן את  " + data.clientName + "?");
       if (ClientPaiedResult) {
 
         if(data.isPaied == 0)
         {
           // Update the isPaied value in the object to 1
           data.isPaied = 1;
-        
+          totalClientsPaiedValue++;
+          //paiedAmountValue += data.amount;
+          
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
         
@@ -549,7 +571,8 @@ window.onload = function() {
         {
           // Update the isPaied value in the object to 0
           data.isPaied = 0;
-        
+          totalClientsPaiedValue--;
+
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
         
