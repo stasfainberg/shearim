@@ -553,7 +553,7 @@ window.onload = function() {
           // Update the isPaied value in the object to 1
           data.isPaied = 1;
           totalClientsPaiedValue++;
-          //paiedAmountValue += data.amount;
+          paiedAmountValue += Number(data.amount);
           
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
@@ -572,6 +572,7 @@ window.onload = function() {
           // Update the isPaied value in the object to 0
           data.isPaied = 0;
           totalClientsPaiedValue--;
+          paiedAmountValue -= Number(data.amount);
 
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
