@@ -209,6 +209,9 @@ window.onload = function() {
       totalAmountValue = Number("0");
       totalAmountPaiedValue = Number("0");
       totalAmountShuoldPayValue = Number("0");
+      totalClientsValue = Number("0");
+      totalClientsPaiedValue = Number("0");
+      totalClientsUnPaiedValue = Number("0");
     };
 
     // Report on the success of the transaction completing, when everything is done
@@ -370,7 +373,7 @@ window.onload = function() {
         {       
           document.getElementById(cursor.value.id).classList.add("clicked");
           totalAmountPaiedValue += Number(cursor.value.amount);
-
+          totalClientsPaiedValue++;
         }
         
 
@@ -579,6 +582,7 @@ window.onload = function() {
           updateIDRequest.onsuccess = function() {
             totalAmountValue = 0;
             totalAmountPaiedValue = 0;
+            totalClientsPaiedValue = 0;
 
             displayData();
           };
@@ -601,6 +605,8 @@ window.onload = function() {
           updateIDRequest.onsuccess = function() {
             totalAmountValue = 0;
             totalAmountPaiedValue = 0;
+            totalClientsPaiedValue = 0;
+
             displayData();
           }
         }
