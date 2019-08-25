@@ -19,8 +19,8 @@ const amountInput = document.querySelector('#amount');
 /*************** Summary Section **************/
 //First Row
 const totalAmountInput = document.querySelector('#totalAmount');
-const paiedAmountInput = document.querySelector('#paiedAmount');
-const shouldPayAmountInput = document.querySelector('#shouldPayAmount');
+const totalAmountPaiedInput = document.querySelector('#totalAmountPaied');
+const totalAmountShouldPayInput = document.querySelector('#totalAmountShouldPay');
 
 //Second Row 
 const totalClientsInput = document.querySelector('#totalClients');
@@ -47,8 +47,8 @@ var paiedByValue;
 /*************** Summary Section **************/
 //First Row
 var totalAmountValue = Number("0");
-var paiedAmountValue = Number("0");
-var shouldPayAmountValue = Number("0");
+var totalAmountPaiedValue = Number("0");
+var totalAmountShuoldPayValue = Number("0");
 
 //Second Row
 var totalClientsValuelist;
@@ -206,7 +206,9 @@ window.onload = function() {
       paymentDateInput.value = '';
       paiedBySelectInput.value = 'שולם על ידי';
       amountInput.value = '';
-      totalAmountValue = 0;
+      totalAmountValue = Number("0");
+      totalAmountPaiedValue = Number("0");
+      totalAmountShuoldPayValue = Number("0");
     };
 
     // Report on the success of the transaction completing, when everything is done
@@ -358,46 +360,49 @@ window.onload = function() {
         //confirmBtn.onclick = deleteItem;
         confirmButton.onclick = clientConfirm;
 
+
+
+
+
         
+        /************************* Paint table's row if client marked as paied ********************************/
+        if(cursor.value.isPaied == 1)
+        {       
+          document.getElementById(cursor.value.id).classList.add("clicked");
+          totalAmountPaiedValue += Number(cursor.value.amount);
+
+        }
         
+
+
+
+        
+
+
+
         /************************* Display Data in Summary Section ********************************/
         /****** First Row *****/
         //Getting the amount from database and adding it to the total amount
         totalAmountValue += Number(cursor.value.amount);
         //Setting the value of total amount input
-        totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
-
-
-
-
+        totalAmountInput.setAttribute("value", totalAmountValue.toString(10));  
+        
         //Shows the amount was already paied
-        paiedAmountInput.setAttribute("value", paiedAmountValue.toString(10));
-
-
-
-
+        totalAmountPaiedInput.setAttribute("value", totalAmountPaiedValue.toString(10));
+        
         //Shows the amount which left to be paied
-        shouldPayAmountValue = totalAmountValue - paiedAmountValue;
+        totalAmountShouldPayValue = totalAmountValue - totalAmountPaiedValue;
         //Setting the value of client who should pay
-        shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+        totalAmountShouldPayInput.setAttribute("value", totalAmountShouldPayValue.toString(10));
 
-
-
-
-
-
+        
         /****** Second Row *****/
         //
         totalClientsInput.setAttribute("value", totalClientsValue.toString(10));
         
-
-
         //
         totalClientsPaiedInput.setAttribute("value", totalClientsPaiedValue.toString(10));
-
-
-
-
+        
         //Settings the total amount of clients which didn't pay yet by substructing the total amount of clients which paied 
         //from total amount of clients
         totalClientsUnPaiedValue = totalClientsValue - totalClientsPaiedValue;
@@ -409,17 +414,7 @@ window.onload = function() {
         
 
 
-
-        if(cursor.value.isPaied == 1)
-        {       
-          document.getElementById(cursor.value.id).classList.add("clicked");
-        }
         
-        if(cursor.value.isPaied == 0)
-        {       
-          document.getElementById(cursor.value.id).classList.add("Unlicked");
-        }
-
         
 
 
@@ -434,8 +429,19 @@ window.onload = function() {
           totalAmountValue = 0;
           totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
 
-          shouldPayAmountValue = 0;
-          shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+          totalAmountPaiedValue = 0;
+          totalAmountPaiedInput.setAttribute("value", totalAmountPaiedValue.toString(10));
+
+          totalAmountShouldPayValue = 0;
+          totalAmountShouldPayInput.setAttribute("value", totalAmountShouldPayValue.toString(10));
+
+
+
+          totalClientsValue = 0;
+          totalClientsInput.setAttribute("value", totalClientsValue.toString(10));
+
+          totalClientsPaiedValue = 0;
+          totalClientsPaiedInput.setAttribute("value", totalClientsPaiedValue.toString(10));
 
           totalClientsUnPaiedValue = 0;
           totalClientsUnPaiedInput.setAttribute("value", totalClientsUnPaiedValue.toString(10));
@@ -495,19 +501,32 @@ window.onload = function() {
         document.getElementById("myDiv").style.display = "none";
 
         totalAmountValue = 0;
-        
+        totalAmountPaiedValue = 0;
+        totalClientsPaiedValue = 0;
+
         myVar = setTimeout(displayData, 1000);
 
         // Again, if table is empty, display a 'No notes stored' message
         if(!tbody.firstChild) {
-          //let listItem = document.createElement('li');
-          //listItem.textContent = 'No notes stored.';
+                    //let listItem = document.createElement('li');
+          //listItem.textContent = 'No notes stored.'
           //list.appendChild(listItem);
           totalAmountValue = 0;
           totalAmountInput.setAttribute("value", totalAmountValue.toString(10));
 
-          shouldPayAmountValue = 0;
-          shouldPayAmountInput.setAttribute("value", shouldPayAmountValue.toString(10));
+          totalAmountPaiedValue = 0;
+          totalAmountPaiedInput.setAttribute("value", totalAmountPaiedValue.toString(10));
+
+          totalAmountShouldPayValue = 0;
+          totalAmountShouldPayInput.setAttribute("value", totalAmountShouldPayValue.toString(10));
+
+
+
+          totalClientsValue = 0;
+          totalClientsInput.setAttribute("value", totalClientsValue.toString(10));
+
+          totalClientsPaiedValue = 0;
+          totalClientsPaiedInput.setAttribute("value", totalClientsPaiedValue.toString(10));
 
           totalClientsUnPaiedValue = 0;
           totalClientsUnPaiedInput.setAttribute("value", totalClientsUnPaiedValue.toString(10));
@@ -541,10 +560,6 @@ window.onload = function() {
       // Grab the data object returned as the result
       var data = objectStoreIDRequest.result;
       
-      console.log("data.amount");
-      console.log(data.amount);
-
-
       var ClientPaiedResult = confirm("האם בטוח לסמן את  " + data.clientName + "?");
       if (ClientPaiedResult) {
 
@@ -553,7 +568,6 @@ window.onload = function() {
           // Update the isPaied value in the object to 1
           data.isPaied = 1;
           totalClientsPaiedValue++;
-          paiedAmountValue += Number(data.amount);
           
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
@@ -564,15 +578,18 @@ window.onload = function() {
           // When this new request succeeds, run the displayData() function again to update the display
           updateIDRequest.onsuccess = function() {
             totalAmountValue = 0;
+            totalAmountPaiedValue = 0;
+
             displayData();
           };
 
-        } else
+        } else if (data.isPaied == 1)
         {
           // Update the isPaied value in the object to 0
           data.isPaied = 0;
           totalClientsPaiedValue--;
-          paiedAmountValue -= Number(data.amount);
+
+
 
           // Create another request that inserts the item back into the database
           var updateIDRequest = objectStore.put(data);
@@ -583,6 +600,7 @@ window.onload = function() {
           // When this new request succeeds, run the displayData() function again to update the display
           updateIDRequest.onsuccess = function() {
             totalAmountValue = 0;
+            totalAmountPaiedValue = 0;
             displayData();
           }
         }
