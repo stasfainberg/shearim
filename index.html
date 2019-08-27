@@ -52,10 +52,10 @@
               </select>
             </div>
             <div class="col-sm-4">
-              <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="20" required>
+              <input id="invoiceNumber" class="form-control" type="text" tabindex="2" placeholder="מספר חשבונית" maxlength="15" required>
             </div>
             <div class="col-sm-4">
-              <input id="clientName" class="form-control" type="text" tabindex="1" placeholder="שם הלקוח" maxlength="20" required>          
+              <input id="clientName" class="form-control" type="text" tabindex="1" placeholder="שם הלקוח" maxlength="15" required>          
             </div>
           </div>
 
@@ -130,6 +130,7 @@
       
     <!------------------------------------------------ Data Table Section ---------------------------------------------->
       <div id="dataTableSection" class="container-fluid">
+        
         <div class="btn-group btn-toolbar justify-content-between" role="group">
           <div id="dataTableButtons" class="btn-group" role="group">
               <button type="button" class="btn btn-outline-primary btn-md" id="allPaiedBtn"><span >הכל שולם</span></button>
@@ -151,12 +152,12 @@
               
               <tr>
                 <th></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
-                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש סכום"></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש תאריך"></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש על ידי"></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש אמצעי"></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש חשבונית"></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="..חפש שם לקוח"></th>
               </tr>
               <tr>
                   <th>פעולות</th>
