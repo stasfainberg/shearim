@@ -20,8 +20,6 @@
     <!-- My scripts -->
     <script type="text/javascript" src="script.js" defer></script>
 
-
-
   </head>
   <body>
 
@@ -132,9 +130,9 @@
     <!------------------------------------------------ Data Table Section ---------------------------------------------->
       <div id="dataTableSection" class="container-fluid">
         <div class="btn-group btn-toolbar justify-content-between" role="group">
-          <div class="btn-group" role="group">
-              <button class="btn btn-secondary btn-lg"><span style="font-size:x-large;">סמן הכל כשולם</span></button>
-              <button class="btn btn-secondary btn-lg"><span style="font-size:x-large;">מחק הכל</span></button>        
+          <div id="dataTableButtons" class="btn-group" role="group">
+              <button type="button" class="btn btn-outline-primary btn-md" id="allPaiedBtn"><span >הכל שולם</span></button>
+              <button type="button" class="btn btn-outline-secondary btn-md" id="deleteAllBtn" onload="myInit()"><span >מחק הכל</span></button>        
           </div>
           <div class="input-group">
               <h2>לקוחות</h2>

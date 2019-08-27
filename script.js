@@ -32,6 +32,7 @@ const totalClientsUnPaiedInput = document.querySelector('#totalClientsUnPaied');
 const tbody = document.querySelector('tbody');
 const table = document.querySelector('#myTable');
 const tableBody = document.getElementById('#tableBody');
+const deleteAllBtn = document.getElementById("#deleteAllBtn");
 
 
 
@@ -91,6 +92,7 @@ window.onload = function() {
     // Run the displayData() function to display the notes already in the IDB
     //displayData();
     myVar = setTimeout(displayData, 1000);
+    
   };
 
 
@@ -122,12 +124,19 @@ window.onload = function() {
 
 
 
+    
+
+
+
+  
 
 
   /************************************************ Add Data to Database ***************************************************/
 
   // Create an onsubmit handler so that when the form is submitted the addData() function is run
   form.onsubmit = addData;
+
+  deleteAllBtn.onclick = deleteAllData;
 
   // Define the addData() function
   function addData(e) {
@@ -364,6 +373,18 @@ window.onload = function() {
         confirmButton.onclick = clientConfirm;
 
 
+
+        //Create Confirm Button
+        /*
+        let deleteAllBtn = document.createElement('button');
+        deleteAllBtn.classList.add('btn', 'btn-outline-secondary', 'btn-md');
+        deleteAllBtn.setAttribute("id", "deleteAllBtn");
+        deleteAllBtn.setAttribute("style", "font-size:4px");
+
+        dataTableButtons.appendChild(deleteAllBtn)
+
+        deleteAllBtn.onclick = deleteAllData;
+        */
 
 
 
@@ -613,6 +634,34 @@ window.onload = function() {
       }
     }
   }
+
+
+
+  function deleteAllData(){
+    console.log('inside func02');
+    var result = confirm("האם בטוח למחוק?");
+    if (result) 
+    {
+      var DBDeleteRequest = window.indexedDB.deleteDatabase("shearim_db");
+
+      DBDeleteRequest.onerror = function(event) {
+        console.log("Error deleting database.");
+      };
+  
+      DBDeleteRequest.onsuccess = function(event) {
+        console.log("Database deleted successfully");
+      
+        console.log(event.result); // should be undefined
+      };
+
+    }
+    displayData();
+  }
+
+
+
+
+
 };
 
 

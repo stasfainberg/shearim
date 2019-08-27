@@ -86,6 +86,30 @@ h2 {
   background-color:white;
 }
 
+.btn-outline-primary {
+  border: none;
+  font-size: 30px;
+}
+
+.btn-outline-primary:hover {
+  border-radius: 10px;
+}
+
+.btn-outline-secondary {
+  border: none;
+  font-size: 30px;
+
+}
+
+.btn-outline-secondary:hover {
+  border-radius: 10px;
+}
+
+#dataTableButtons {
+  margin: 0 0 8px 0;
+}
+
+
 /************************************** Loader ********************************/
 
 #loader {
