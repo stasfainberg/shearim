@@ -43,13 +43,6 @@ div {
   margin-bottom: 10px;
 }
 
-/* This class added to each il*/
-.mystyle {
-  border: 3px solid #1c4563;
-  margin: 10px 0 10px 0;
-  padding: 3px 3px 10px 10px;
-}
-
 .selectClasses {
   width: 100%;
   margin: auto;
@@ -87,8 +80,8 @@ h2 {
 }
 
 .btn-outline-primary {
-  border: none;
   font-size: 30px;
+  border: none;
 }
 
 .btn-outline-primary:hover {
@@ -96,9 +89,8 @@ h2 {
 }
 
 .btn-outline-secondary {
-  border: none;
   font-size: 30px;
-
+  border: none;
 }
 
 .btn-outline-secondary:hover {
@@ -109,7 +101,13 @@ h2 {
   margin: 0 0 8px 0;
 }
 
+#clientsLable {
+  padding: 6px 6px; 
+}
 
+#myInput {
+  width: 8rem;
+}
 /************************************** Loader ********************************/
 
 #loader {

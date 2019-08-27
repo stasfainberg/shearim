@@ -15,10 +15,11 @@
     <title>שערים | מערכת למעקב גביה</title>
 
     <!-- My style -->
-    <link href="style.css" rel="stylesheet">
+    <link href="./lib/style/style.css" rel="stylesheet">
     
     <!-- My scripts -->
-    <script type="text/javascript" src="script.js" defer></script>
+    <script type="text/javascript" src="./lib/js/script.js" defer></script>
+    <script type="text/javascript" src="./lib/js/script01.js" defer></script>
 
   </head>
   <body>
@@ -135,7 +136,7 @@
               <button type="button" class="btn btn-outline-secondary btn-md" id="deleteAllBtn" onload="myInit()"><span >מחק הכל</span></button>        
           </div>
           <div class="input-group">
-              <h2>לקוחות</h2>
+              <h2 id="clientsLable">לקוחות</h2>
           </div>
         </div>
 
@@ -144,8 +145,32 @@
         <div id="loader"></div>
 
         <div style="display:none;" id="myDiv" class="animate-bottom">
+
           <table id="myTable" class="table table-hover">
             <thead align="right">
+              
+              <tr>
+                <th></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+                <th><input type="text" id="myInput" onkeyup="myFilterFunction()" placeholder="amount.."></th>
+              </tr>
+              <tr>
+                  <th>פעולות</th>
+                  <th>סכום</th>
+                  <th>תאריך התשלום</th>
+                  <th>שולם על ידי</th>
+                  <th>שולם באמצעות</th>
+                  <th>מספר חשבונית</th>
+                  <th>שם לקוח</th>
+                </tr>
+
+
+
+              <!--
               <tr>
                 <th>פעולות</th>
                 <th>סכום</th>
@@ -155,6 +180,8 @@
                 <th>מספר חשבונית</th>
                 <th>שם לקוח</th>
               </tr>
+              -->
+
             </thead>
             <tbody align="right" id="tableBody">
             </tbody>
