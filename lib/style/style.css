@@ -105,9 +105,12 @@ h2 {
   padding: 6px 6px; 
 }
 
-#myInput {
+.tableFilterInput {
   width: 8rem;
 }
+
+
+
 /************************************** Loader ********************************/
 
 #loader {

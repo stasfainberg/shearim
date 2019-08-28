@@ -149,29 +149,23 @@
 
           <table id="myTable" class="table table-hover">
             <thead align="right">
-              
-              <tr>
-                <th></th>
-                <th><input type="text" id="myInput00" onkeyup="myFilterFunction00()" placeholder="..חפש סכום"></th>
-                <th><input type="text" id="myInput01" onkeyup="myFilterFunction01()" placeholder="..חפש תאריך"></th>
-                <th><input type="text" id="myInput02" onkeyup="myFilterFunction02()" placeholder="..חפש על ידי"></th>
-                <th><input type="text" id="myInput03" onkeyup="myFilterFunction03()" placeholder="..חפש אמצעי"></th>
-                <th><input type="text" id="myInput04" onkeyup="myFilterFunction04()" placeholder="..חפש חשבונית"></th>
-                <th><input type="text" id="myInput05" onkeyup="myFilterFunction05()" placeholder="..חפש שם לקוח"></th>
+
+              <tr id="filterRow"> 
+                              
+                <th>
+                  <button class="btn btn-secondary btn-sm" id="clearFilter" style="font-size:4px">
+                    <i class="material-icons">נקה</i>
+                  </button>
+                </th>
+                <th><input type="text" class="tableFilterInput" id="myInput00" onkeyup="myFilterFunction00()" placeholder="..חפש סכום"></th>
+                <th><input type="text" class="tableFilterInput" id="myInput01" onkeyup="myFilterFunction01()" placeholder="..חפש תאריך"></th>
+                <th><input type="text" class="tableFilterInput" id="myInput02" onkeyup="myFilterFunction02()" placeholder="..חפש על ידי"></th>
+                <th><input type="text" class="tableFilterInput" id="myInput03" onkeyup="myFilterFunction03()" placeholder="..חפש אמצעי"></th>
+                <th><input type="text" class="tableFilterInput" id="myInput04" onkeyup="myFilterFunction04()" placeholder="..חפש חשבונית"></th>
+                <th><input type="text" class="tableFilterInput" id="myInput05" onkeyup="myFilterFunction05()" placeholder="..חפש שם לקוח"></th>
               </tr>
-              <tr>
-                  <th>פעולות</th>
-                  <th>סכום</th>
-                  <th>תאריך התשלום</th>
-                  <th>שולם על ידי</th>
-                  <th>שולם באמצעות</th>
-                  <th>מספר חשבונית</th>
-                  <th>שם לקוח</th>
-                </tr>
 
 
-
-              <!--
               <tr>
                 <th>פעולות</th>
                 <th>סכום</th>
@@ -181,8 +175,6 @@
                 <th>מספר חשבונית</th>
                 <th>שם לקוח</th>
               </tr>
-              -->
-
             </thead>
             <tbody align="right" id="tableBody">
             </tbody>
