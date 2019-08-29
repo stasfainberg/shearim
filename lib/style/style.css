@@ -85,16 +85,20 @@ h2 {
 }
 
 .btn-outline-primary:hover {
-  border-radius: 10px;
+  border: none;
+  color: #fff !important;
+text-decoration: none;
 }
 
-.btn-outline-secondary {
+.btn-outline-info {
   font-size: 30px;
   border: none;
 }
 
-.btn-outline-secondary:hover {
-  border-radius: 10px;
+.btn-outline-info:hover {
+  border: none;
+  color: #fff !important;
+text-decoration: none;
 }
 
 #dataTableButtons {
@@ -105,10 +109,10 @@ h2 {
   padding: 6px 6px; 
 }
 
-.tableFilterInput {
-  width: 8rem;
+#clearFilter {
+  width: 4rem;
+  margin: 0px 0px 10px 0px;
 }
-
 
 
 /************************************** Loader ********************************/
