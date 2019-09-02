@@ -17,9 +17,7 @@
     <!-- My style -->
     <link href="./lib/style/style.css" rel="stylesheet">
     
-    <!-- My scripts -->
-    <script type="text/javascript" src="./lib/js/script.js" defer></script>
-    <script type="text/javascript" src="./lib/js/script01.js" defer></script>
+
 
   </head>
   <body>
@@ -147,24 +145,9 @@
 
         <div style="display:none;" id="myDiv" class="animate-bottom">
 
-
-          
-          <!--
-          <button class="btn btn-secondary btn-sm" id="clearFilter" style="font-size:4px">
-            <i class="material-icons">נקה</i>
-          </button>
-          <input type="text" class="tableFilterInput" id="myInput00" onkeyup="myFilterFunction00()" placeholder="..חפש סכום">
-          <input type="text" class="tableFilterInput" id="myInput01" onkeyup="myFilterFunction01()" placeholder="..חפש תאריך">
-          <input type="text" class="tableFilterInput" id="myInput02" onkeyup="myFilterFunction02()" placeholder="..חפש על ידי">
-          <input type="text" class="tableFilterInput" id="myInput03" onkeyup="myFilterFunction03()" placeholder="..חפש אמצעי">
-          <input type="text" class="tableFilterInput" id="myInput04" onkeyup="myFilterFunction04()" placeholder="..חפש חשבונית">
-          <input type="text" class="tableFilterInput" id="myInput05" onkeyup="myFilterFunction05()" placeholder="..חפש שם לקוח">
-          -->
-
-
           <table id="myTable" class="table table-hover">
             <thead align="right">
-              <tr>
+              <tr id="tableFirstRow">
                 <th>
                   <div class="button tableFilterInput">
                       <button class="btn btn-info" type="button">
@@ -177,25 +160,9 @@
                     <div class="dropdown btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי סכום<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListAmount">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
 
-                    <!--
-
-                  <div class="dropdown tableFilterInput" id="myInput00">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      מיין לפי סכום
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-
-                  -->
 
 
                 </th>
@@ -205,25 +172,9 @@
                     <div class="dropdown btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי תאריך<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListDate">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
 
-                    <!--
-                  <div class="dropdown tableFilterInput" id="myInput00">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      מיין לפי תאריך
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
-
-
-                  -->
 
 
                 </th>
@@ -232,24 +183,8 @@
                     <div class="dropdown btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי על ידי<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListPaiedBy">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
-
-                    <!--
-                    <div class="dropdown tableFilterInput" id="myInput00">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          מיין לפי על ידי
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-
-                    -->
 
                 </th>
                 <th>
@@ -257,51 +192,19 @@
                     <div class="dropdown btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי  באמצעות<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListPaymentMethod">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
 
-                    <!--
-                    <div class="dropdown tableFilterInput" id="myInput00">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          מיין לפי אמצעי
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-
-
-                    -->
                 </th>
                 <th>
 
 
-                    <div class="dropdown btn-group">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי  חשבונית<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListInvoice">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
 
-
-                    <!--
-                    <div class="dropdown tableFilterInput" id="myInput00">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          מיין לפי חשבונית
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-
-                    -->
 
                 </th>
                 <th>
@@ -310,31 +213,16 @@
                     <div class="dropdown btn-group">
                         <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">מיין לפי לקוח<span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu" id="filterListClient">
-                            <!--<li><a href="#">Action</a></li>-->
-
                         </ul>
                     </div>
 
 
-                    <!--
-                    <div class="dropdown tableFilterInput" id="myInput00">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          מיין לפי לקוח
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">Action</a>
-                          <a class="dropdown-item" href="#">Another action</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                      </div>
-
-                      -->
 
 
 
                 </th>
               </tr>
-              <tr>
+              <tr id="tableSecondRow">
                 <th>פעולות</th>
                 <th>סכום</th>
                 <th>תאריך התשלום</th>
@@ -375,7 +263,9 @@
 
 
    
-
+    <!-- My scripts -->
+    <script type="text/javascript" src="./lib/js/script.js" defer></script>
+    <script type="text/javascript" src="./lib/js/script01.js" defer></script>
 
 
 
