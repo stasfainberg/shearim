@@ -79,17 +79,6 @@ h2 {
   background-color:white;
 }
 
-.btn-outline-primary {
-  font-size: 30px;
-  border: none;
-}
-
-.btn-outline-primary:hover {
-  border: none;
-  color: #fff !important;
-text-decoration: none;
-}
-
 .btn-outline-info {
   font-size: 30px;
   border: none;
