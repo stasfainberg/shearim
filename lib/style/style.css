@@ -114,7 +114,11 @@ text-decoration: none;
   margin: 0px 0px 10px 0px;
 }
 
-
+.scrollable-menu {
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
 /************************************** Loader ********************************/
 
 #loader {
