@@ -82,12 +82,20 @@ h2 {
 .btn-outline-info {
   font-size: 30px;
   border: none;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .btn-outline-info:hover {
   border: none;
   color: #fff !important;
-text-decoration: none;
+  text-decoration: none;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
 }
 
 #dataTableButtons {
